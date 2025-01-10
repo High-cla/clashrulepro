@@ -1,0 +1,14 @@
+payload:
+#----自定义规则 格式请参考教程------------
+ - DOMAIN-SUFFIX,clash.razord.top
+ - DOMAIN-SUFFIX,yacd.haishan.me
+ - DOMAIN-SUFFIX,rewards.bing.com
+ - DOMAIN-REGEX,^r+[0-9]+(---|\.)sn-(2x3|ni5|j5o)\w{5}\.xn--ngstr-lra8j\.com$
+ - DOMAIN-SUFFIX,bsbsb.top
+ - DOMAIN-SUFFIX,bili.lar.moe
+ - DOMAIN-SUFFIX,doh-366227ea.doh.pub
+ - DOMAIN-SUFFIX,dot-366227ea.dot.pub
+#----------------------------------------
+ - DOMAIN-SUFFIX,windowsupdate.com       #win系统更新不走代理以免浪费流量
+#classical形式的rule-provider支持路由规则的全部类型 (rule-set/sub-rule 除外)
+#可用规则格式如下：https://wiki.metacubex.one/config/rules/
