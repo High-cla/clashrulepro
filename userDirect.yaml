@@ -6,8 +6,6 @@ payload:
  - DOMAIN-REGEX,^r+[0-9]+(---|\.)sn-(2x3|ni5|j5o)\w{5}\.xn--ngstr-lra8j\.com$
  - DOMAIN-SUFFIX,bsbsb.top
  - DOMAIN-SUFFIX,bili.lar.moe
- - DOMAIN-SUFFIX,doh-366227ea.doh.pub
- - DOMAIN-SUFFIX,dot-366227ea.dot.pub
  - DOMAIN-SUFFIX,cn
  - DOMAIN-KEYWORD,-cn
  - DOMAIN-SUFFIX,ip6-localhost
