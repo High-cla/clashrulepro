@@ -161,3 +161,4 @@ payload:
   - "+.internal"
   - "+.in-addr.arpa"
   - "+.ip6.arpa"
+  - browserleaks.com
