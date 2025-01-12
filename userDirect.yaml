@@ -8,6 +8,12 @@ payload:
  - DOMAIN-SUFFIX,bili.lar.moe
  - DOMAIN-SUFFIX,doh-366227ea.doh.pub
  - DOMAIN-SUFFIX,dot-366227ea.dot.pub
+ - DOMAIN-SUFFIX,cn
+ - DOMAIN-KEYWORD,-cn
+ - DOMAIN-SUFFIX,ip6-localhost
+ - DOMAIN-SUFFIX,ip6-loopback
+ - DOMAIN-SUFFIX,local
+ - DOMAIN-SUFFIX,localhost
 #----------------------------------------
  - DOMAIN-SUFFIX,windowsupdate.com       #win系统更新不走代理以免浪费流量
 #classical形式的rule-provider支持路由规则的全部类型 (rule-set/sub-rule 除外)
