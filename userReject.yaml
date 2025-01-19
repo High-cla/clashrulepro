@@ -2,3 +2,4 @@ payload:
   - DOMAIN-SUFFIX,black.qimo.ink
   - DOMAIN-KEYWORD,turn
   - DOMAIN-KEYWORD,stun
+  - DOMAIN-KEYWORD,httpdns
