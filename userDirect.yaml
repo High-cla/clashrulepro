@@ -22,7 +22,7 @@ payload:
  - DOMAIN-SUFFIX,grpc.biliapi.net
  - DOMAIN-SUFFIX,cn
  - DOMAIN-KEYWORD,-cn
- - DOMAIN-KEYWORD,vdownload
+ - DOMAIN-KEYWORD,vdownload*
  - DOMAIN-SUFFIX,ip6-localhost
  - DOMAIN-SUFFIX,ip6-loopback
  - DOMAIN-SUFFIX,local
