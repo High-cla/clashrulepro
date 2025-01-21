@@ -22,6 +22,7 @@ payload:
  - DOMAIN-SUFFIX,grpc.biliapi.net
  - DOMAIN-SUFFIX,cn
  - DOMAIN-KEYWORD,-cn
+ - DOMAIN-KEYWORD,vdownload
  - DOMAIN-SUFFIX,ip6-localhost
  - DOMAIN-SUFFIX,ip6-loopback
  - DOMAIN-SUFFIX,local
@@ -49,8 +50,6 @@ payload:
  - DOMAIN-SUFFIX,office.com
  - DOMAIN,ocws.officeapps.live.com
  - DOMAIN-SUFFIX,events.data.microsoft.com
- - DOMAIN,yacd.haishan.me
- - DOMAIN,clash.razord.top
  - DOMAIN-SUFFIX,dcg.microsoft.com
  - DOMAIN-SUFFIX,dl.delivery.mp.microsoft.com
  - DOMAIN-SUFFIX,download.windowsupdate.com
