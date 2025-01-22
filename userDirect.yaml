@@ -15,7 +15,8 @@ payload:
  - DOMAIN-SUFFIX,clash.razord.top
  - DOMAIN-SUFFIX,yacd.haishan.me
  - DOMAIN-SUFFIX,rewards.bing.com
- - DOMAIN-SUFFIX,vdownload.+.com
+ - DOMAIN-SUFFIX,vdownload-+.+-+.com
+ - DOMAIN-SUFFIX,vdownload.hembed.com
  - DOMAIN-REGEX,^r+[0-9]+(---|\.)sn-(2x3|ni5|j5o)\w{5}\.xn--ngstr-lra8j\.com$
  - DOMAIN-SUFFIX,bsbsb.top
  - DOMAIN-SUFFIX,bili.lar.moe
