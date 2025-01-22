@@ -4,5 +4,3 @@ payload:
  - DOMAIN,extshort.weixin.qq.com
  - DOMAIN,dns.weixin.qq.com
  - DOMAIN-SUFFIX,googleapis.cn
-#classical形式的rule-provider支持路由规则的全部类型 (rule-set/sub-rule除外)
-#可用规则格式如下https://wiki.metacubex.one/config/rules/
