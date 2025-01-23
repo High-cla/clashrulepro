@@ -1,6 +1,11 @@
-    payload:
+payload:
  - DOMAIN-SUFFIX,black.qimo.ink
  - DOMAIN-SUFFIX,'trpc.o3.+'
+ - DOMAIN-SUFFIX,prd-lender.cdp.internal.unity3d.com
+ - DOMAIN-SUFFIX,thind-prd-knob.data.ie.unity3d.com
+ - DOMAIN-SUFFIX,thind-gke-usc.prd.data.corp.unity3d.com
+ - DOMAIN-SUFFIX,cdp.cloud.unity3d.com
+ - DOMAIN-SUFFIX,remote-config-proxy-prd.uca.cloud.unity3d.com
  - DOMAIN-SUFFIX,log-upload.mihoyo.com
  - DOMAIN-SUFFIX,log-upload-os.mihoyo.com
  - DOMAIN-SUFFIX,log-upload-os.hoyoverse.com
@@ -8,11 +13,6 @@
  - DOMAIN-SUFFIX,overseauspider.yuanshen.com
  - DOMAIN-SUFFIX,uspider.yuanshen.com
  - DOMAIN-SUFFIX,h5log-api-dualstack.mihoyo.com
- - DOMAIN-SUFFIX,prd-lender.cdp.internal.unity3d.com
- - DOMAIN-SUFFIX,thind-prd-knob.data.ie.unity3d.com
- - DOMAIN-SUFFIX,thind-gke-usc.prd.data.corp.unity3d.com
- - DOMAIN-SUFFIX,cdp.cloud.unity3d.com
- - DOMAIN-SUFFIX,remote-config-proxy-prd.uca.cloud.unity3d.com
  - DOMAIN-SUFFIX,zzz-log-upload.mihoyo.com
  - DOMAIN-SUFFIX,sdk-log-upload.mihoyo.com
  - DOMAIN-SUFFIX,ad-log-upload.mihoyo.com
