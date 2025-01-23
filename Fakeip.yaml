@@ -157,6 +157,6 @@ payload:
   - +.pvp.net
   - +.*.xboxlive.com
   - speedtest.cros.wr.pvp.net
-  - "+.internal"
-  - "+.in-addr.arpa"
-  - "+.ip6.arpa"
+  - '+.internal'
+  - '+.in-addr.arpa'
+  - '+.ip6.arpa'

@@ -1,6 +1,6 @@
 payload:
  - DOMAIN-SUFFIX,black.qimo.ink
- - DOMAIN-SUFFIX,"trpc.o3.+"
+ - DOMAIN-SUFFIX,'trpc.o3.+'
  - DOMAIN-SUFFIX,log-upload.mihoyo.com
  - DOMAIN-SUFFIX,log-upload-os.mihoyo.com
  - DOMAIN-SUFFIX,log-upload-os.hoyoverse.com
