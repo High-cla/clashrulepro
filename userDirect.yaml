@@ -12,21 +12,31 @@ payload:
  - DST-PORT,995
  - DST-PORT,993
  - DST-PORT,3306
+ - DOMAIN,ocws.officeapps.live.com
+ - DOMAIN,cn.bing.com
+ - DOMAIN,b.c2r.ts.cdn.office.net
+ - DOMAIN,f.c2r.ts.cdn.office.net
+ - DOMAIN,bg.v4.a.dl.ws.microsoft.com
+ - DOMAIN,bg4.v4.a.dl.ws.microsoft.com
+ - DOMAIN,'epicgames-download*.akamaized.net'
+ - DOMAIN,mtalk.google.com
+ - DOMAIN,'*mtalk.google.com'
+ - DOMAIN,safebrowsing.googleapis.com
+ - DOMAIN-REGEX,'^r+[0-9]+(---|\.)sn-(2x3|ni5|j5o)\w{5}\.xn--ngstr-lra8j\.com$'
+ - DOMAIN-KEYWORD,'-cn'
+ - DOMAIN-KEYWORD,'steampipe'
+ - DOMAIN-KEYWORD,'steamcontent'
  - DOMAIN-SUFFIX,clash.razord.top
  - DOMAIN-SUFFIX,yacd.haishan.me
  - DOMAIN-SUFFIX,rewards.bing.com
- - DOMAIN-REGEX,^r+[0-9]+(---|\.)sn-(2x3|ni5|j5o)\w{5}\.xn--ngstr-lra8j\.com$
  - DOMAIN-SUFFIX,bsbsb.top
  - DOMAIN-SUFFIX,bili.lar.moe
  - DOMAIN-SUFFIX,grpc.biliapi.net
  - DOMAIN-SUFFIX,cn
- - DOMAIN-KEYWORD,-cn
  - DOMAIN-SUFFIX,ip6-localhost
  - DOMAIN-SUFFIX,ip6-loopback
  - DOMAIN-SUFFIX,local
  - DOMAIN-SUFFIX,localhost
- - DOMAIN-KEYWORD,steampipe
- - DOMAIN-KEYWORD,steamcontent
  - DOMAIN-SUFFIX,steampipe-kr.akamaized.net
  - DOMAIN-SUFFIX,steampipe-partner.akamaized.net
  - DOMAIN-SUFFIX,steampipe.akamaized.net
@@ -46,25 +56,9 @@ payload:
  - DOMAIN-SUFFIX,qtlglb.com
  - DOMAIN-SUFFIX,queniuqe.com
  - DOMAIN-SUFFIX,office.com
- - DOMAIN,ocws.officeapps.live.com
  - DOMAIN-SUFFIX,events.data.microsoft.com
  - DOMAIN-SUFFIX,dcg.microsoft.com
  - DOMAIN-SUFFIX,dl.delivery.mp.microsoft.com
  - DOMAIN-SUFFIX,download.windowsupdate.com
- - DOMAIN,cn.bing.com
- - DOMAIN,b.c2r.ts.cdn.office.net
- - DOMAIN,f.c2r.ts.cdn.office.net
- - DOMAIN,bg.v4.a.dl.ws.microsoft.com
- - DOMAIN,bg4.v4.a.dl.ws.microsoft.com
- - DOMAIN,epicgames-download1.akamaized.net
- - DOMAIN,epicgames-download0.akamaized.net
- - DOMAIN,epicgames-download2.akamaized.net
- - DOMAIN,epicgames-download3.akamaized.net
- - DOMAIN,epicgames-download4.akamaized.net
- - DOMAIN,epicgames-download5.akamaized.net
- - DOMAIN,epicgames-download6.akamaized.net
- - DOMAIN,epicgames-download7.akamaized.net
- - DOMAIN,epicgames-download8.akamaized.net
- - DOMAIN,epicgames-download9.akamaized.net
  - DOMAIN-SUFFIX,windowsupdate.com
 #可用规则格式如下https://wiki.metacubex.one/config/rules/

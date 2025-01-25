@@ -2,15 +2,12 @@ payload:
   - localhost.ptlogin2.qq.com
   - localhost.work.weixin.qq.com
   - localhost.sec.qq.com
-  - '*.msftncsi.com'
-  - '*.msftconnecttest.com'
   - '*.lan'
   - '*.local'
   - '*.localdomain'
   - '*.home.arpa'
   - '*.invalid'
   - '*.example'
-  - router.asus.com
   - '*.market.xiaomi.com'
   - '*.localhost'
   - '*.test'
@@ -26,137 +23,66 @@ payload:
   - '127.*'
   - '10.*'
   - '100.64.*'
-  - '224.*'
   - '240.*'
   - '*'
   - 'fe80::'
   - '::1'
   - 'fc00::'
   - 'fd00::'
-  - time.*.com
-  - time.*.gov
-  - time.*.edu.cn
-  - time.*.apple.com
-  - time-ios.apple.com
-  - time1.*.com
-  - time2.*.com
-  - time3.*.com
-  - time4.*.com
-  - time5.*.com
-  - time6.*.com
-  - time7.*.com
-  - ntp.*.com
-  - ntp1.*.com
-  - ntp2.*.com
-  - ntp3.*.com
-  - ntp4.*.com
-  - ntp5.*.com
-  - ntp6.*.com
-  - ntp7.*.com
+  - 'time.*.com'
+  - 'time.*.gov'
+  - 'time.*.edu.cn'
+  - 'time.*.apple.com'
+  - 'time-ios.apple.com'
+  - 'time*.*.com'
+  - 'ntp.*.com'
+  - 'ntp*.*.com'
   - '*.time.edu.cn'
   - '*.ntp.org.cn'
   - '+.pool.ntp.org'
   - time1.cloud.tencent.com
-  - stun.*.*
-  - stun.*.*.*
-  - stun.*.*.*.*
-  - +.stun.*.*
-  - +.stun.*.*.*
-  - +.stun.*.*.*.*
-  - +.openwrt.pool.ntp.org
-  - +.pool.ntp.org
+  - '+.openwrt.pool.ntp.org'
+  - '+.pool.ntp.org'
   - time.windows.com
   - time.nist.gov
   - time.apple.com
   - time.asia.apple.com
-  - time1.cloud.tencent.com
   - time.ustc.edu.cn
   - pool.ntp.org
   - ntp.ubuntu.com
-  - ntp.aliyun.com
-  - ntp1.aliyun.com
-  - ntp2.aliyun.com
-  - ntp3.aliyun.com
-  - ntp4.aliyun.com
-  - ntp5.aliyun.com
-  - ntp6.aliyun.com
-  - ntp7.aliyun.com
-  - time1.aliyun.com
-  - time2.aliyun.com
-  - time3.aliyun.com
-  - time4.aliyun.com
-  - time5.aliyun.com
-  - time6.aliyun.com
-  - time7.aliyun.com
-  - time1.apple.com
-  - time2.apple.com
-  - time3.apple.com
-  - time4.apple.com
-  - time5.apple.com
-  - time6.apple.com
-  - time7.apple.com
-  - time1.google.com
-  - time2.google.com
-  - time3.google.com
-  - time4.google.com
-  - +.google.com
-  - +.music.163.com
-  - +.126.net
-  - +.taihe.com
-  - +.kugou.com
-  - +.kuwo.cn
-  - api-jooxtt.sanook.com
-  - api.joox.com
-  - joox.com
-  - +.y.qq.com
-  - streamoc.music.tc.qq.com
-  - mobileoc.music.tc.qq.com
-  - isure.stream.qqmusic.qq.com
-  - dl.stream.qqmusic.qq.com
-  - aqqmusic.tc.qq.com
-  - amobile.music.tc.qq.com
-  - +.xiami.com
-  - +.music.migu.cn
-  - music.migu.cn
-  - +.msftconnecttest.com
-  - +.msftncsi.com
-  - msftconnecttest.com
-  - msftncsi.com
-  - localhost.ptlogin2.qq.com
-  - localhost.sec.qq.com
-  - +.srv.nintendo.net
-  - +.stun.playstation.net
-  - xbox.*.microsoft.com
+  - 'ntp*.aliyun.com'
+  - 'time*.aliyun.com'
+  - 'time*.apple.com'
+  - 'time*.google.com'
+  - '+.126.net'
+  - '+.taihe.com'
+  - '+.y.qq.com'
+  - '+.xiami.com'
+  - '+.msftconnecttest.com'
+  - '+.msftncsi.com'
+  - 'xbox.*.microsoft.com'
   - xnotify.xboxlive.com
-  - +.ipv6.microsoft.com
-  - +.battlenet.com.cn
-  - +.wotgame.cn
-  - +.wggames.cn
-  - +.wowsgame.cn
-  - +.wargaming.net
-  - proxy.golang.org
+  - '+.ipv6.microsoft.com'
+  - '+.battlenet.com.cn'
+  - '+.wotgame.cn'
+  - '+.wggames.cn'
+  - '+.wowsgame.cn'
+  - '+.wargaming.net'
+  - 'proxy.golang.org'
   - heartbeat.belkin.com
-  - +.linksys.com
-  - +.linksyssmartwifi.com
-  - +.router.asus.com
-  - mesu.apple.com
-  - swscan.apple.com
-  - swquery.apple.com
-  - swdownload.apple.com
-  - swcdn.apple.com
-  - swdist.apple.com
+  - '+.linksys.com'
+  - '+.linksyssmartwifi.com'
+  - '+.router.asus.com'
   - lens.l.google.com
   - stun.l.google.com
-  - +.square-enix.com
-  - +.finalfantasyxiv.com
-  - +.ffxiv.com
-  - +.ff14.sdo.com
+  - '+.square-enix.com'
+  - '+.finalfantasyxiv.com'
+  - '+.ffxiv.com'
+  - '+.ff14.sdo.com'
   - ff.dorado.sdo.com
-  - +.mcdn.bilivideo.cn
-  - +.media.dssott.com
-  - +.pvp.net
-  - +.*.xboxlive.com
-  - speedtest.cros.wr.pvp.net
+  - '+.media.dssott.com'
+  - '+.pvp.net'
+  - '+.*.xboxlive.com'
   - '+.internal'
   - '+.in-addr.arpa'
   - '+.ip6.arpa'
