@@ -61,7 +61,6 @@
 0.0.0.0 overseauspider.yuanshen.com
 0.0.0.0 uspider.yuanshen.com
 0.0.0.0 h5log-api-dualstack.mihoyo.com
-0.0.0.0 *log*.cmpassport.com
 0.0.0.0 *upload*.mihoyo.com
 
 #如果怕封号,下面几行也可以加入,但会让你没法使用Unity编辑器

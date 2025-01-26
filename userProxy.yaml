@@ -4,4 +4,4 @@ payload:
  - DOMAIN,extshort.weixin.qq.com
  - DOMAIN,dns.weixin.qq.com
  - DOMAIN-SUFFIX,googleapis.cn
- - DOMAIN-SUFFIX,'+.iturrit.com'
+ - DOMAIN-SUFFIX,+.iturrit.com

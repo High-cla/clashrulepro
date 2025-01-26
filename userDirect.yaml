@@ -18,14 +18,14 @@ payload:
  - DOMAIN-SUFFIX,f.c2r.ts.cdn.office.net
  - DOMAIN-SUFFIX,bg.v4.a.dl.ws.microsoft.com
  - DOMAIN-SUFFIX,bg4.v4.a.dl.ws.microsoft.com
- - DOMAIN-SUFFIX,'epicgames-download+.akamaized.net'
+ - DOMAIN-SUFFIX,epicgames-download+.akamaized.net
  - DOMAIN-SUFFIX,mtalk.google.com
- - DOMAIN-SUFFIX,'+mtalk.google.com'
+ - DOMAIN-SUFFIX,+mtalk.google.com
  - DOMAIN-SUFFIX,safebrowsing.googleapis.com
- - DOMAIN-REGEX,'^r+[0-9]+(---|\.)sn-(2x3|ni5|j5o)\w{5}\.xn--ngstr-lra8j\.com$'
- - DOMAIN-KEYWORD,'-cn'
- - DOMAIN-KEYWORD,'steampipe'
- - DOMAIN-KEYWORD,'steamcontent'
+ - DOMAIN-REGEX,^r+[0-9]+(---|\.)sn-(2x3|ni5|j5o)\w{5}\.xn--ngstr-lra8j\.com$
+ - DOMAIN-KEYWORD,-cn
+ - DOMAIN-KEYWORD,steampipe
+ - DOMAIN-KEYWORD,steamcontent
  - DOMAIN-SUFFIX,clash.razord.top
  - DOMAIN-SUFFIX,yacd.haishan.me
  - DOMAIN-SUFFIX,rewards.bing.com
