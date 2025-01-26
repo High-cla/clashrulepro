@@ -6,16 +6,8 @@ payload:
  - DOMAIN-SUFFIX,thind-gke-usc.prd.data.corp.unity3d.com
  - DOMAIN-SUFFIX,cdp.cloud.unity3d.com
  - DOMAIN-SUFFIX,remote-config-proxy-prd.uca.cloud.unity3d.com
- - DOMAIN-SUFFIX,log-upload.mihoyo.com
- - DOMAIN-SUFFIX,log-upload-os.mihoyo.com
- - DOMAIN-SUFFIX,log-upload-os.hoyoverse.com
- - DOMAIN-SUFFIX,devlog-upload.mihoyo.com
  - DOMAIN-SUFFIX,overseauspider.yuanshen.com
  - DOMAIN-SUFFIX,uspider.yuanshen.com
  - DOMAIN-SUFFIX,h5log-api-dualstack.mihoyo.com
- - DOMAIN-SUFFIX,zzz-log-upload.mihoyo.com
- - DOMAIN-SUFFIX,sdk-log-upload.mihoyo.com
- - DOMAIN-SUFFIX,ad-log-upload.mihoyo.com
- - DOMAIN-SUFFIX,log-upload-v6.mihoyo.com
- - DOMAIN-SUFFIX,log2.cmpassport.com
- - DOMAIN-SUFFIX,apm-log-upload-v6.mihoyo.com
+ - DOMAIN-SUFFIX,'+log+.cmpassport.com'
+ - DOMAIN-SUFFIX,'+upload+.mihoyo.com'
