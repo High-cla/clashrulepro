@@ -12,5 +12,5 @@ payload:
  - DOMAIN-SUFFIX,'+log+.cmpassport.com'
  - DOMAIN-SUFFIX,'+upload+.mihoyo.com'
  - DOMAIN,'+nintendo.+'
- - DOMAIN-SUFFIX,'+.nintendo-europe.com'
+ - DOMAIN-SUFFIX,'+.+nintendo-europe.com'
  - DOMAIN,'+nintendoswitch.+'
