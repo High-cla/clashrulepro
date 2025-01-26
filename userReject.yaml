@@ -11,6 +11,6 @@ payload:
  - DOMAIN-SUFFIX,h5log-api-dualstack.mihoyo.com
  - DOMAIN-SUFFIX,'+log+.cmpassport.com'
  - DOMAIN-SUFFIX,'+upload+.mihoyo.com'
- - DOMAIN-SUFFIX,'+nintendo.+'
- - DOMAIN-SUFFIX,'+.+nintendo-europe.com'
- - DOMAIN-SUFFIX,'+nintendoswitch.+'
+ - DOMAIN,'+nintendo.+'
+ - DOMAIN,'+.+nintendo-europe.com'
+ - DOMAIN,'+nintendoswitch.+'
