@@ -1,2 +1,2 @@
 payload:
- - DOMAIN,'vdownload+.+.com'
+ - DOMAIN-SUFFIX,'vdownload+.+.com'
