@@ -1,6 +1,6 @@
 payload:
  - DOMAIN-SUFFIX,black.qimo.ink
- - DOMAIN-SUFFIX,'trpc.o3.+'
+ - DOMAIN,'trpc.o3.+'
  - DOMAIN-SUFFIX,prd-lender.cdp.internal.unity3d.com
  - DOMAIN-SUFFIX,thind-prd-knob.data.ie.unity3d.com
  - DOMAIN-SUFFIX,thind-gke-usc.prd.data.corp.unity3d.com
@@ -12,5 +12,5 @@ payload:
  - DOMAIN-SUFFIX,'+log+.cmpassport.com'
  - DOMAIN-SUFFIX,'+upload+.mihoyo.com'
  - DOMAIN,'+nintendo.+'
- - DOMAIN-SUFFIX,'+.+nintendo-europe.com'
+ - DOMAIN,'+.+nintendo-europe.com'
  - DOMAIN,'+nintendoswitch.+'

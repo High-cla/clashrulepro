@@ -18,9 +18,9 @@ payload:
  - DOMAIN,f.c2r.ts.cdn.office.net
  - DOMAIN,bg.v4.a.dl.ws.microsoft.com
  - DOMAIN,bg4.v4.a.dl.ws.microsoft.com
- - DOMAIN,'epicgames-download*.akamaized.net'
+ - DOMAIN,'epicgames-download+.akamaized.net'
  - DOMAIN,mtalk.google.com
- - DOMAIN,'*mtalk.google.com'
+ - DOMAIN,'+mtalk.google.com'
  - DOMAIN,safebrowsing.googleapis.com
  - DOMAIN-REGEX,'^r+[0-9]+(---|\.)sn-(2x3|ni5|j5o)\w{5}\.xn--ngstr-lra8j\.com$'
  - DOMAIN-KEYWORD,'-cn'
