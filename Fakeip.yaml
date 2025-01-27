@@ -21,9 +21,9 @@ payload:
   - time.*.edu.cn
   - time.*.apple.com
   - time-ios.apple.com
-  - time*.*.com
+  - time+.*.com
   - ntp.*.com
-  - ntp*.*.com
+  - ntp+.*.com
   - +.time.edu.cn
   - +.ntp.org.cn
   - +.pool.ntp.org
@@ -37,10 +37,10 @@ payload:
   - time.ustc.edu.cn
   - pool.ntp.org
   - ntp.ubuntu.com
-  - ntp*.aliyun.com
-  - time*.aliyun.com
-  - time*.apple.com
-  - time*.google.com
+  - ntp+.aliyun.com
+  - time+.aliyun.com
+  - time+.apple.com
+  - time+.google.com
   - +.126.net
   - +.taihe.com
   - +.y.qq.com

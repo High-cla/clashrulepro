@@ -1,9 +1,9 @@
 #更新地址https://raw.githubusercontent.com/rentianyu/Ad-set-hosts/master/hosts
 
 #本地主机
-0.0.0.0 localhost
-0.0.0.0 localhost.localdomain
-0.0.0.0 local
+127.0.0.1 localhost
+127.0.0.1 localhost.localdomain
+127.0.0.1 local
 255.255.255.255 broadcasthost
 ::1 localhost
 ::1 ip6-localhost
@@ -58,10 +58,28 @@
 0.0.0.0 m.track.ad.xiaomi.com
 
 #米哈游拦截
+0.0.0.0 log-upload.mihoyo.com
+0.0.0.0 devlog-upload.mihoyo.com
+0.0.0.0 devlog-upload-os.mihoyo.com
+0.0.0.0 log-upload-os.mihoyo.com
+0.0.0.0 log-upload-os.hoyoverse.com
 0.0.0.0 overseauspider.yuanshen.com
 0.0.0.0 uspider.yuanshen.com
 0.0.0.0 h5log-api-dualstack.mihoyo.com
-0.0.0.0 *upload*.mihoyo.com
+0.0.0.0 zzz-log-upload.mihoyo.com
+0.0.0.0 sdk-log-upload.mihoyo.com
+0.0.0.0 ad-log-upload.mihoyo.com
+0.0.0.0 ys-log-upload.mihoyo.com
+0.0.0.0 log-upload-v6.mihoyo.com
+0.0.0.0 log-upload.mihoyo.com
+0.0.0.0 apm-log-upload-v6.mihoyo.com
+0.0.0.0 apm-log-upload.mihoyo.com
+0.0.0.0 hkrpg-log-upload.mihoyo.com
+0.0.0.0 hkrpg-log-upload-v6.mihoyo.com
+0.0.0.0 act-upload.mihoyo.com
+0.0.0.0 upload-bbs.mihoyo.com
+0.0.0.0 uploadstatic.mihoyo.com
+0.0.0.0 uploadstatic-sea.mihoyo.com
 
 #如果怕封号,下面几行也可以加入,但会让你没法使用Unity编辑器
 0.0.0.0 prd-lender.cdp.internal.unity3d.com

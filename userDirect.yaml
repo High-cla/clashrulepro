@@ -18,7 +18,7 @@ payload:
  - DOMAIN-SUFFIX,f.c2r.ts.cdn.office.net
  - DOMAIN-SUFFIX,bg.v4.a.dl.ws.microsoft.com
  - DOMAIN-SUFFIX,bg4.v4.a.dl.ws.microsoft.com
- - DOMAIN-SUFFIX,epicgames-download*.akamaized.net
+ - DOMAIN-SUFFIX,epicgames-download+.akamaized.net
  - DOMAIN-SUFFIX,mtalk.google.com
  - DOMAIN-SUFFIX,+mtalk.google.com
  - DOMAIN-SUFFIX,safebrowsing.googleapis.com
