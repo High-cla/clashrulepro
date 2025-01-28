@@ -5,5 +5,3 @@ payload:
  - DOMAIN,dns.weixin.qq.com
  - DOMAIN-SUFFIX,googleapis.cn
  - DOMAIN-SUFFIX,+.iturrit.com
- - DOMAIN-SUFFIX,deepseek.com
- - DOMAIN-SUFFIX,volces.com
