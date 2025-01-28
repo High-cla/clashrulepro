@@ -1,6 +1,6 @@
 payload:
  - DOMAIN-SUFFIX,black.qimo.ink
- - DOMAIN,trpc.o3.+
+ - DOMAIN,trpc.o3.*
  - DOMAIN-SUFFIX,prd-lender.cdp.internal.unity3d.com
  - DOMAIN-SUFFIX,thind-prd-knob.data.ie.unity3d.com
  - DOMAIN-SUFFIX,thind-gke-usc.prd.data.corp.unity3d.com
@@ -34,6 +34,7 @@ payload:
  - DOMAIN-SUFFIX,upload-bbs.mihoyo.com
  - DOMAIN-SUFFIX,uploadstatic.mihoyo.com
  - DOMAIN-SUFFIX,uploadstatic-sea.mihoyo.com
+ - DOMAIN-SUFFIX,*upload*.mihoyo.com
  - DOMAIN,+.*nintendo.*
  - DOMAIN,+.*nintendo-europe.com
  - DOMAIN,+.*nintendoswitch.*
