@@ -9,7 +9,7 @@ payload:
  - DOMAIN-SUFFIX,overseauspider.yuanshen.com
  - DOMAIN-SUFFIX,uspider.yuanshen.com
  - DOMAIN-SUFFIX,h5log-api-dualstack.mihoyo.com
- - DOMAIN-SUFFIX,+upload*.mihoyo.com
+ - DOMAIN-SUFFIX,upload*.mihoyo.com
  - DOMAIN,+.*nintendo.*
  - DOMAIN,+.*nintendo-europe.com
  - DOMAIN,+.*nintendoswitch.*
