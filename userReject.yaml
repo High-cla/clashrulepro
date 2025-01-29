@@ -34,6 +34,7 @@ payload:
  - DOMAIN-SUFFIX,upload-bbs.mihoyo.com
  - DOMAIN-SUFFIX,uploadstatic.mihoyo.com
  - DOMAIN-SUFFIX,uploadstatic-sea.mihoyo.com
+ - DOMAIN-SUFFIX,*upload.mihoyo.com
  - DOMAIN,+.*nintendo.*
  - DOMAIN,+.*nintendo-europe.com
  - DOMAIN,+.*nintendoswitch.*
