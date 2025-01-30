@@ -59,6 +59,7 @@
 
 #米哈游拦截
 0.0.0.0 log-upload.mihoyo.com
+0.0.0.0 log-upload-v6.mihoyo.com
 0.0.0.0 devlog-upload.mihoyo.com
 0.0.0.0 devlog-upload-os.mihoyo.com
 0.0.0.0 log-upload-os.mihoyo.com
@@ -70,16 +71,20 @@
 0.0.0.0 sdk-log-upload.mihoyo.com
 0.0.0.0 ad-log-upload.mihoyo.com
 0.0.0.0 ys-log-upload.mihoyo.com
-0.0.0.0 log-upload-v6.mihoyo.com
-0.0.0.0 log-upload.mihoyo.com
+0.0.0.0 zzz-log-upload-v6.mihoyo.com
+0.0.0.0 sdk-log-upload-v6.mihoyo.com
+0.0.0.0 ad-log-upload-v6.mihoyo.com
+0.0.0.0 ys-log-upload-v6.mihoyo.com
 0.0.0.0 apm-log-upload-v6.mihoyo.com
 0.0.0.0 apm-log-upload.mihoyo.com
 0.0.0.0 hkrpg-log-upload.mihoyo.com
 0.0.0.0 hkrpg-log-upload-v6.mihoyo.com
 0.0.0.0 act-upload.mihoyo.com
+0.0.0.0 act-upload-v6.mihoyo.com
 0.0.0.0 upload-bbs.mihoyo.com
 0.0.0.0 uploadstatic.mihoyo.com
 0.0.0.0 uploadstatic-sea.mihoyo.com
+0.0.0.0 *upload*.mihoyo.com
 
 #如果怕封号,下面几行也可以加入,但会让你没法使用Unity编辑器
 0.0.0.0 prd-lender.cdp.internal.unity3d.com
