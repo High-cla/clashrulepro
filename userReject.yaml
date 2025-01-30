@@ -1,6 +1,6 @@
 payload:
  - DOMAIN,black.qimo.ink
- - DOMAIN,trpc.o3.*
+ - DOMAIN-REGEX,pcdn|mcdn|trpc.o3|*upload*.mihoyo.com
  - DOMAIN,prd-lender.cdp.internal.unity3d.com
  - DOMAIN,thind-prd-knob.data.ie.unity3d.com
  - DOMAIN,thind-gke-usc.prd.data.corp.unity3d.com
