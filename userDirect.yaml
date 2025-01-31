@@ -23,7 +23,8 @@ payload:
  - DOMAIN-SUFFIX,+mtalk.google.com
  - DOMAIN-SUFFIX,safebrowsing.googleapis.com
  - DOMAIN-REGEX,^r+[0-9]+(---|\.)sn-(2x3|ni5|j5o)\w{5}\.xn--ngstr-lra8j\.com$
- - DOMAIN-REGEX,-cn|steampipe|steamcontent|cn
+ - DOMAIN-REGEX,-cn|cn
+ - DOMAIN-REGEX,steampipe|steamcontent
  - DOMAIN-SUFFIX,clash.razord.top
  - DOMAIN-SUFFIX,yacd.haishan.me
  - DOMAIN-SUFFIX,rewards.bing.com
