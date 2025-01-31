@@ -1,75 +1,74 @@
-payload:
-  - localhost.ptlogin2.qq.com
-  - localhost.work.weixin.qq.com
-  - localhost.sec.qq.com
-  - +.lan
-  - +.local
-  - +.localdomain
-  - +.home.arpa
-  - +.invalid
-  - +.example
-  - +.market.xiaomi.com
-  - +.localhost
-  - +.test
-  - '*'
-  - 'fe80::'
-  - '::1'
-  - 'fc00::'
-  - 'fd00::'
-  - time.*.com
-  - time.*.gov
-  - time.*.edu.cn
-  - time.*.apple.com
-  - time-ios.apple.com
-  - time+.*.com
-  - ntp.*.com
-  - ntp+.*.com
-  - +.time.edu.cn
-  - +.ntp.org.cn
-  - +.pool.ntp.org
-  - time1.cloud.tencent.com
-  - +.openwrt.pool.ntp.org
-  - +.pool.ntp.org
-  - time.windows.com
-  - time.nist.gov
-  - time.apple.com
-  - time.asia.apple.com
-  - time.ustc.edu.cn
-  - pool.ntp.org
-  - ntp.ubuntu.com
-  - ntp+.aliyun.com
-  - time+.aliyun.com
-  - time+.apple.com
-  - time+.google.com
-  - +.126.net
-  - +.taihe.com
-  - +.y.qq.com
-  - +.xiami.com
-  - +.msftconnecttest.com
-  - +.msftncsi.com
-  - xbox.*.microsoft.com
-  - xnotify.xboxlive.com
-  - +.ipv6.microsoft.com
-  - +.battlenet.com.cn
-  - +.wotgame.cn
-  - +.wggames.cn
-  - +.wowsgame.cn
-  - +.wargaming.net
-  - proxy.golang.org
-  - heartbeat.belkin.com
-  - +.linksys.com
-  - +.linksyssmartwifi.com
-  - +.router.asus.com
-  - lens.l.google.com
-  - stun.l.google.com
-  - +.square-enix.com
-  - +.finalfantasyxiv.com
-  - +.ffxiv.com
-  - +.ff14.sdo.com
-  - ff.dorado.sdo.com
-  - +.media.dssott.com
-  - +.pvp.net
-  - +.*.xboxlive.com
-  - +.internal
-  - +.in-addr.arpa
-  - +.ip6.arpa
+localhost.ptlogin2.qq.com
+localhost.work.weixin.qq.com
+localhost.sec.qq.com
++.lan
++.local
++.localdomain
++.home.arpa
++.invalid
++.example
++.market.xiaomi.com
++.localhost
++.test
+'*'
+'fe80::'
+'::1'
+'fc00::'
+'fd00::'
+time.*.com
+time.*.gov
+time.*.edu.cn
+time.*.apple.com
+time-ios.apple.com
+time+.*.com
+ntp.*.com
+ntp+.*.com
++.time.edu.cn
++.ntp.org.cn
++.pool.ntp.org
+time1.cloud.tencent.com
++.openwrt.pool.ntp.org
++.pool.ntp.org
+time.windows.com
+time.nist.gov
+time.apple.com
+time.asia.apple.com
+time.ustc.edu.cn
+pool.ntp.org
+ntp.ubuntu.com
+ntp+.aliyun.com
+time+.aliyun.com
+time+.apple.com
+time+.google.com
++.126.net
++.taihe.com
++.y.qq.com
++.xiami.com
++.msftconnecttest.com
++.msftncsi.com
+xbox.*.microsoft.com
+xnotify.xboxlive.com
++.ipv6.microsoft.com
++.battlenet.com.cn
++.wotgame.cn
++.wggames.cn
++.wowsgame.cn
++.wargaming.net
+proxy.golang.org
+heartbeat.belkin.com
++.linksys.com
++.linksyssmartwifi.com
++.router.asus.com
+lens.l.google.com
+stun.l.google.com
++.square-enix.com
++.finalfantasyxiv.com
++.ffxiv.com
++.ff14.sdo.com
+ff.dorado.sdo.com
++.media.dssott.com
++.pvp.net
++.*.xboxlive.com
++.internal
++.in-addr.arpa
++.ip6.arpa
