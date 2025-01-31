@@ -19,9 +19,10 @@ DOMAIN-SUFFIX,bg.v4.a.dl.ws.microsoft.com
 DOMAIN-SUFFIX,bg4.v4.a.dl.ws.microsoft.com
 DOMAIN-SUFFIX,epicgames-download+.akamaized.net
 DOMAIN-SUFFIX,mtalk.google.com
-DOMAIN-SUFFIX,+mtalk.google.com
-DOMAIN-SUFFIX,safebrowsing.googleapis.com
+DOMAIN-SUFFIX,googleapis.com
+DOMAIN-SUFFIX,googleapis.cn
 DOMAIN-REGEX,^r+[0-9]+(---|\.)sn-(2x3|ni5|j5o)\w{5}\.xn--ngstr-lra8j\.com$
+DOMAIN-REGEX,localhost|local|ip6-localhost|ip6-loopback
 DOMAIN-REGEX,-cn|cn
 DOMAIN-REGEX,steampipe|steamcontent
 DOMAIN-SUFFIX,clash.razord.top
@@ -30,10 +31,6 @@ DOMAIN-SUFFIX,rewards.bing.com
 DOMAIN-SUFFIX,bsbsb.top
 DOMAIN-SUFFIX,bili.lar.moe
 DOMAIN-SUFFIX,grpc.biliapi.net
-DOMAIN-SUFFIX,ip6-localhost
-DOMAIN-SUFFIX,ip6-loopback
-DOMAIN-SUFFIX,local
-DOMAIN-SUFFIX,localhost
 DOMAIN-SUFFIX,steampipe-kr.akamaized.net
 DOMAIN-SUFFIX,steampipe-partner.akamaized.net
 DOMAIN-SUFFIX,steampipe.akamaized.net
