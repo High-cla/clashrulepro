@@ -22,8 +22,7 @@ DOMAIN-SUFFIX,mtalk.google.com
 DOMAIN-SUFFIX,googleapis.cn
 DOMAIN-REGEX,^r+[0-9]+(---|\.)sn-(2x3|ni5|j5o)\w{5}\.xn--ngstr-lra8j\.com$
 DOMAIN-REGEX,^([a-z0-9-]+\.)*(localhost|local|ip6-localhost|ip6-loopback)(\.[a-z0-9-]+)*\.[a-z]{2,}$
-DOMAIN-REGEX,^([a-z0-9-]+\.)*[a-z0-9-]*(-cn|cn|china|chinese)[a-z0-9-]*(\.[a-z0-9-]+)*\.[a-z]{2,}$
-DOMAIN-REGEX,^([a-z0-9-]+\.)*[a-z0-9-]*(steampipe|steamcontent)[a-z0-9-]*(\.[a-z0-9-]+)*\.[a-z]{2,}$
+DOMAIN-REGEX,^([a-z0-9-]+\.)*[a-z0-9-]*(-cn|cn|china|chinese|steampipe|steamcontent)[a-z0-9-]*(\.[a-z0-9-]+)*\.[a-z]{2,}$
 DOMAIN-REGEX,^(steampipe|steamcontent)[a-z0-9-]*(\.[a-z0-9-]+)*\.[a-z]{2,}$
 DOMAIN-SUFFIX,clash.razord.top
 DOMAIN-SUFFIX,yacd.haishan.me
