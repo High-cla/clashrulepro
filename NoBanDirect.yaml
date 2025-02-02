@@ -1,3 +1,4 @@
 #DOMAIN-SUFFIX,+.hembed.com
 #DOMAIN-SUFFIX,+.sb-cd.com
-DOMAIN-REGEX,^vdownload[a-z0-9-]*(\.[a-z0-9-]+)*\.[a-z]{2,}$
+#DOMAIN-REGEX,^vdownload[a-z0-9-]*(\.[a-z0-9-]+)*\.[a-z]{2,}$
+DOMAIN-REGEX,^(?!vdownload\.hembed\.com$)vdownload[a-z0-9-]*(\.[a-z0-9-]+)*\.[a-z]{2,}$
