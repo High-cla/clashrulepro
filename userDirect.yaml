@@ -16,6 +16,7 @@ DOMAIN-SUFFIX,epicgames-download+.akamaized.net
 DOMAIN-SUFFIX,mtalk.google.com
 DOMAIN-SUFFIX,googleapis.cn
 DOMAIN-REGEX,^r+[0-9]+(---|\.)sn-(2x3|ni5|j5o)\w{5}\.xn--ngstr-lra8j\.com$
+IP-ASN,32590
 DOMAIN-KEYWORD,localhost
 DOMAIN-KEYWORD,local
 DOMAIN-KEYWORD,ip6-localhost
@@ -27,6 +28,7 @@ DOMAIN-KEYWORD,chinese
 DOMAIN-KEYWORD,office
 DOMAIN-KEYWORD,microsoft
 DOMAIN-KEYWORD,steampowered
+DOMAIN-KEYWORD,steamserver
 DOMAIN-KEYWORD,steamstatic
 DOMAIN-KEYWORD,steampipe
 DOMAIN-KEYWORD,steamcontent
