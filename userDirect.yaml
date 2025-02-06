@@ -16,7 +16,7 @@ DOMAIN-SUFFIX,epicgames-download+.akamaized.net
 DOMAIN-SUFFIX,googleapis.cn
 DOMAIN-REGEX,^r+[0-9]+(---|\.)sn-(2x3|ni5|j5o)\w{5}\.xn--ngstr-lra8j\.com$
 DOMAIN-REGEX,^(alt\d-)?mtalk(-staging|-dev|\d)?\.google\.com$
-IP-ASN,32590
+IP-ASN,32590,no-resolve
 DOMAIN-KEYWORD,localhost
 DOMAIN-KEYWORD,local
 DOMAIN-KEYWORD,ip6-localhost
