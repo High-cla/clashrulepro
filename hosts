@@ -84,8 +84,11 @@ ff02::3 ip6-allhosts
 127.0.0.1 uploadstatic.mihoyo.com
 127.0.0.1 uploadstatic-sea.mihoyo.com
 127.0.0.1 *upload*.mihoyo.com
+127.0.0.1 *upload*.hoyoverse.com
+127.0.0.1 *upload*.yuanshen.com
 
 #如果怕封号,下面几行也可以加入,但会让你没法使用Unity编辑器
+127.0.0.1 *prd*.unity3d.com
 127.0.0.1 prd-lender.cdp.internal.unity3d.com
 127.0.0.1 thind-prd-knob.data.ie.unity3d.com
 127.0.0.1 thind-gke-usc.prd.data.corp.unity3d.com
