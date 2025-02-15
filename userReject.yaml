@@ -1,10 +1,6 @@
 DOMAIN-SUFFIX,black.qimo.ink
 DOMAIN-REGEX,^(trpc\.o3\.[a-z0-9-]+(\.[a-z0-9-]+)*\.[a-z]{2,})$
-DOMAIN-REGEX,^(?!.*login)[a-z0-9-]*(upload|log)[a-z0-9-]*\.(mihoyo|hoyoverse|yuanshen)\.com$
+DOMAIN-REGEX,^(?!.*login)[a-z0-9-]*(upload|log|uspider|public)[a-z0-9-]*\.(mihoyo|hoyoverse|yuanshen)\.com$
 DOMAIN-REGEX,^([a-z0-9-]+\.)*(nintendo|nintendo-europe|nintendoswitch)(\.[a-z0-9-]+)*\.[a-z]{2,}$
 DOMAIN-REGEX,^[a-z0-9-]*prd[a-z0-9-]*\.unity3d\.com$
 DOMAIN-SUFFIX,cdp.cloud.unity3d.com
-DOMAIN-SUFFIX,overseauspider.yuanshen.com
-DOMAIN-SUFFIX,uspider.yuanshen.com
-DOMAIN-SUFFIX,h5log-api-dualstack.mihoyo.com
- 
