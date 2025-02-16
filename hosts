@@ -58,9 +58,9 @@ ff02::3 ip6-allhosts
 127.0.0.1 m.track.ad.xiaomi.com
 
 #米哈游拦截
-127.0.0.1 globaldp-prod-cn01.juequling.com
-127.0.0.1 overseauspider.yuanshen.com
-127.0.0.1 uspider.yuanshen.com
+127.0.0.1 *anticheat*
+127.0.0.1 *prod*.juequling.com
+127.0.0.1 *uspider*.yuanshen.com
 127.0.0.1 h5log-api-dualstack.mihoyo.com
 127.0.0.1 *upload*.mihoyo.com
 127.0.0.1 *upload*.hoyoverse.com
