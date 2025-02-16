@@ -4,3 +4,4 @@ DOMAIN-REGEX,^(?!.*login)[a-z0-9-]*(upload|log|uspider|public)[a-z0-9-]*\.(mihoy
 DOMAIN-REGEX,^([a-z0-9-]+\.)*(nintendo|nintendo-europe|nintendoswitch)(\.[a-z0-9-]+)*\.[a-z]{2,}$
 DOMAIN-REGEX,^[a-z0-9-]*prd[a-z0-9-]*\.unity3d\.com$
 DOMAIN-SUFFIX,cdp.cloud.unity3d.com
+DOMAIN-SUFFIX,globaldp-prod-cn01.juequling.com
