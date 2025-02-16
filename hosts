@@ -30,23 +30,6 @@ ff02::3 ip6-allhosts
 #QQ环境包拦截
 127.0.0.1 trpc.o3.*
 
-#fcm重定向台湾服务器绕过gfw
-142.250.157.188 long.weixin.qq.com
-142.250.157.188 short.weixin.qq.com
-142.250.157.188 dns.weixin.qq.com.cn
-142.250.157.188 mtalk*.google.com
-142.250.157.188 mtalk.google.com
-142.250.141.188 alt1-mtalk.google.com
-142.250.115.188 alt2-mtalk.google.com
-173.194.202.188 alt4-mtalk.google.com
-142.250.141.188 alt5-mtalk.google.com
-142.250.115.188 alt6-mtalk.google.com
-142.250.141.188 alt7-mtalk.google.com
-142.250.152.188 alt8-mtalk.google.com
-180.163.151.161 dl.google.com
-64.233.171.188 alt3-mtalk.google.com
-180.163.150.33 dl.l.google.com
-
 #屏蔽小米分析上传
 127.0.0.1 t1.market.xiaomi.com
 127.0.0.1 t2.market.xiaomi.com
