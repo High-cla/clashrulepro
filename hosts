@@ -24,8 +24,9 @@ ff02::3 ip6-allhosts
 127.0.1.3 hostname
 127.0.1.4 hostname
 
-#屏蔽哔哩漫游黑名单服务器
+#哔哩漫游
 127.0.0.1 black.qimo.ink
+184.27.185.79 202.188.238.24 upos-hz-mirrorakam.akamaized.net
 
 #QQ环境包拦截
 127.0.0.1 trpc.o3.*
