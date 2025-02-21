@@ -3,6 +3,6 @@ DOMAIN,short.weixin.qq.com
 DOMAIN,extshort.weixin.qq.com
 DOMAIN,dns.weixin.qq.com
 #DOMAIN,api.bilibili.com
-#DOMAIN,upos-hz-mirrorakam.akamaized.net
+#DOMAIN-REGEX,^upos[a-z0-9-]*(\.[a-z0-9-]+)*\.[a-z]{2,}$
 DOMAIN-SUFFIX,iturrit.com
 DOMAIN-SUFFIX,googleapis.cn
