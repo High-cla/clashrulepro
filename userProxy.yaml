@@ -2,5 +2,7 @@ DOMAIN-SUFFIX,cloudflarestorage.com
 DOMAIN,short.weixin.qq.com
 DOMAIN,extshort.weixin.qq.com
 DOMAIN,dns.weixin.qq.com
+#DOMAIN,api.bilibili.com
+#DOMAIN,upos-hz-mirrorakam.akamaized.net
 DOMAIN-SUFFIX,iturrit.com
 DOMAIN-SUFFIX,googleapis.cn
