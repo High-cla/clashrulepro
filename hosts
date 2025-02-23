@@ -26,8 +26,8 @@ ff02::3 ip6-allhosts
 
 #哔哩漫游
 127.0.0.1 black.qimo.ink
-184.27.185.79 184.27.185.93 upos-hz-mirrorakam.akamaized.net
-43.175.17.52 43.132.85.209 upos-sz-mirrorcosov.bilivideo.com
+#184.27.185.79 upos-hz-mirrorakam.akamaized.net
+#43.175.17.52 upos-sz-mirrorcosov.bilivideo.com
 
 #QQ环境包拦截
 127.0.0.1 trpc.o3.*
