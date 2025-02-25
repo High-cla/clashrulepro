@@ -11,9 +11,7 @@ DST-PORT,587
 DST-PORT,995
 DST-PORT,993
 DST-PORT,3306
-DOMAIN-SUFFIX,cn.bing.com
-DOMAIN-SUFFIX,dl.google.com
-DOMAIN-SUFFIX,epicgames-download+.akamaized.net
+DOMAIN-SUFFIX,akamaized.net
 DOMAIN-REGEX,^r+[0-9]+(---|\.)sn-(2x3|ni5|j5o)\w{5}\.xn--ngstr-lra8j\.com$
 DOMAIN-REGEX,^(alt\d-)?mtalk(-staging|-dev|\d)?\.google\.com$
 DOMAIN-REGEX,^upos[a-z0-9-]*(\.[a-z0-9-]+)*\.[a-z]{2,}$
@@ -35,12 +33,7 @@ DOMAIN,bili.lar.moe
 DOMAIN,api.mahiron.moe
 DOMAIN,哔哩.Plus
 DOMAIN,api.bilibili.com
-DOMAIN-SUFFIX,grpc.biliapi.net
-DOMAIN-SUFFIX,st.dl.bscstorage.net
-DOMAIN-SUFFIX,st.dl.eccdnx.com
-DOMAIN-SUFFIX,st.dl.pinyuncloud.com
-DOMAIN-SUFFIX,qtlglb.com
-DOMAIN-SUFFIX,queniuqe.com
+DOMAIN,grpc.biliapi.net
 DOMAIN-SUFFIX,windowsupdate.com
-DOMAIN-SUFFIX,nstool.netease.com
+DOMAIN-SUFFIX,netease.com
 #可用规则格式如下https://wiki.metacubex.one/config/rules/
