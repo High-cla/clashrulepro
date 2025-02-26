@@ -1,4 +1,4 @@
-DOMAIN,black.qimo.ink
+#DOMAIN,black.qimo.ink
 DOMAIN-REGEX,^(trpc\.o3\.[a-z0-9-]+(\.[a-z0-9-]+)*\.[a-z]{2,})$
 DOMAIN-REGEX,^(?!.*login)[a-z0-9-]*(upload|log|uspider)[a-z0-9-]*\.(mihoyo|hoyoverse|yuanshen|juequling)\.com$
 DOMAIN-REGEX,^([a-z0-9-]+\.)*(nintendo|nintendo-europe|nintendoswitch)(\.[a-z0-9-]+)*\.[a-z]{2,}$
