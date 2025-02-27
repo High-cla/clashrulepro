@@ -2,4 +2,5 @@
 #DOMAIN-SUFFIX,+.sb-cd.com
 DOMAIN-KEYWORD,vdownload
 DOMAIN-KEYWORD,-cdn
+DOMAIN-KEYWORD,git-posters
 #DOMAIN-REGEX,^(?!vdownload\.hembed\.com$)vdownload[a-z0-9-]*(\.[a-z0-9-]+)*\.[a-z]{2,}$
