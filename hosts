@@ -2,7 +2,7 @@
 #ipconfig /flushdns
 
 #本地主机
-127.0.0.1 local localhost localhost.localdomain
+127.0.0.1 local localhost localdomain
 255.255.255.255 broadcasthost
 ::1 localhost ip6-localhost ip6-loopback
 ::0 ip6-localnet ip6-mcastprefix
