@@ -4,9 +4,8 @@
 #本地主机
 127.0.0.1 local localhost localdomain
 255.255.255.255 broadcasthost
-::1 localhost ip6-localhost ip6-loopback
+::1 localhost ip6-localhost ip6-loopback ip6-allnodes
 ::0 ip6-localnet ip6-mcastprefix
-::1 ip6-allnodes
 ::2 ip6-allrouters
 ::3 ip6-allhosts
 fe00::0 ip6-localnet
@@ -46,6 +45,7 @@ ff02::3 ip6-allhosts
 127.0.0.1 *prod*.juequling.com
 127.0.0.1 *uspider*.yuanshen.com
 127.0.0.1 h5log-api-dualstack.mihoyo.com
+127.0.0.1 reksaidnslog.*.mihoyo.com
 127.0.0.1 *upload*.mihoyo.com
 127.0.0.1 *upload*.hoyoverse.com
 127.0.0.1 *upload*.yuanshen.com
