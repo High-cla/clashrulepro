@@ -2,9 +2,14 @@ DOMAIN-SUFFIX,akamaized.net
 DOMAIN-REGEX,^r+[0-9]+(---|\.)sn-(2x3|ni5|j5o)\w{5}\.xn--ngstr-lra8j\.com$
 DOMAIN-REGEX,^(alt\d-)?mtalk(-staging|-dev|\d)?\.google\.com$
 DOMAIN-REGEX,^upos[a-z0-9-]*(\.[a-z0-9-]+)*\.[a-z]{2,}$
+DOMAIN-REGEX,^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$,no-resolve
 IP-ASN,32590,no-resolve
 DOMAIN-KEYWORD,localhost
 DOMAIN-KEYWORD,local
+DOMAIN-KEYWORD,localdomain
+DOMAIN-KEYWORD,ip6.arpa
+DOMAIN-KEYWORD,home.arpa
+DOMAIN-KEYWORD,in-addr.arpa
 DOMAIN-KEYWORD,ip6-localhost
 DOMAIN-KEYWORD,ip6-loopback
 DOMAIN-KEYWORD,-cn
