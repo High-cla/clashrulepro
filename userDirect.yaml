@@ -6,6 +6,7 @@ DOMAIN-REGEX,^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$,no-resolve
 IP-ASN,32590,no-resolve
 DOMAIN-KEYWORD,localhost
 DOMAIN-KEYWORD,local
+DOMAIN-KEYWORD,corp
 DOMAIN-KEYWORD,localdomain
 DOMAIN-KEYWORD,ip6.arpa
 DOMAIN-KEYWORD,home.arpa

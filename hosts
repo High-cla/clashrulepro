@@ -2,9 +2,9 @@
 #ipconfig /flushdns
 
 #本地主机
-127.0.0.1 local localhost localdomain *.in-addr.arpa *.ip6.arpa home.arpa
+127.0.0.1 local localhost localdomain
 255.255.255.255 broadcasthost
-::1 localhost ip6-localhost ip6-loopback ip6-allnodes *.in-addr.arpa *.ip6.arpa home.arpa
+::1 localhost ip6-localhost ip6-loopback ip6-allnodes .in-addr.arpa .ip6.arpa .home.arpa
 ::0 ip6-localnet ip6-mcastprefix
 ::2 ip6-allrouters
 ::3 ip6-allhosts
