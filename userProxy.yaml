@@ -4,3 +4,5 @@ DOMAIN-SUFFIX,cloudflarestorage.com
 DOMAIN-REGEX,^([a-z0-9-]+\.)*(short|long)\.weixin\.qq\.com(\.[a-z]{2,})?$
 DOMAIN-SUFFIX,iturrit.com
 DOMAIN-SUFFIX,googleapis.cn
+DOMAIN,13c5f379.d.adguard-dns.com
+DOMAIN,security.cloudflare-dns.com
