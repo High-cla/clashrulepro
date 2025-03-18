@@ -23,5 +23,6 @@ DOMAIN-SUFFIX,windowsupdate.com
 DOMAIN-SUFFIX,netease.com
 DOMAIN-SUFFIX,alidns.com
 DOMAIN-SUFFIX,dot.pub
+DOMAIN-SUFFIX,ihr360.com
 PROCESS-NAME,qq
 #可用规则格式如下https://wiki.metacubex.one/config/rules/
