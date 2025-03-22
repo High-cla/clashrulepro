@@ -7,6 +7,7 @@ DOMAIN-KEYWORD,cn
 DOMAIN-KEYWORD,china
 DOMAIN-KEYWORD,chinese
 DOMAIN-KEYWORD,upos-
+DOMAIN-KEYWORD,mtalk
 DOMAIN,clash.razord.top
 DOMAIN,yacd.haishan.me
 DOMAIN,rewards.bing.com
@@ -18,8 +19,7 @@ DOMAIN,哔哩.Plus
 DOMAIN,api.bilibili.com
 DOMAIN,grpc.biliapi.net
 DOMAIN-SUFFIX,windowsupdate.com
-DOMAIN-SUFFIX,mtalk
-DOMAIN-SUFFIX,dl
+DOMAIN-SUFFIX,dl.google.com
 DOMAIN-SUFFIX,netease.com
 DOMAIN-SUFFIX,alidns.com
 DOMAIN-SUFFIX,dot.pub
