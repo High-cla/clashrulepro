@@ -33,7 +33,7 @@ ff02::3 ip6-allhosts
 127.0.0.1 dns*.weixin.qq.com*
 
 #米哈游拦截
-127.0.0.1 *anticheat*
+127.0.0.1 *.*anticheat*.*
 127.0.0.1 *uspider*.yuanshen.com
 127.0.0.1 h5log-api-dualstack.mihoyo.com
 127.0.0.1 reksaidnslog.*.mihoyo.com
