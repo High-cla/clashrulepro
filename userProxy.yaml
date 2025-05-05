@@ -2,6 +2,5 @@ DOMAIN-SUFFIX,cloudflarestorage.com
 #DOMAIN,api.bilibili.com
 DOMAIN-REGEX,^([a-z0-9-]+\.)*(short|long)\.weixin\.qq\.com(\.[a-z]{2,})?$
 DOMAIN-SUFFIX,iturrit.com
-DOMAIN-SUFFIX,googleapis.cn
 #DOMAIN-KEYWORD,upos-
 DOMAIN-KEYWORD,cloudflare-dns
