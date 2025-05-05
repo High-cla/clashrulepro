@@ -1,5 +1,7 @@
 DOMAIN-SUFFIX,akamaized.net
 DOMAIN-REGEX,^r+[0-9]+(---|\.)sn-(2x3|ni5|j5o)\w{5}\.xn--ngstr-lra8j\.com$
+DOMAIN-REGEX,^r+[0-9]+(---|\.)sn-(2x3|ni5|j5o)\w{5}\.googlevideo\.com$
+DOMAIN,redirector.c.play.google.com
 DOMAIN-KEYWORD,local
 DOMAIN-KEYWORD,.arpa
 DOMAIN-KEYWORD,invalid
