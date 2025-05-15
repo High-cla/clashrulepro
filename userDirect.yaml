@@ -25,7 +25,6 @@ DOMAIN,哔哩.Plus
 DOMAIN,api.bilibili.com
 DOMAIN,grpc.biliapi.net
 DOMAIN-SUFFIX,windowsupdate.com
-DOMAIN-SUFFIX,cdnjs.cloudflare.com
 DOMAIN-SUFFIX,gamer520.com
 DOMAIN-SUFFIX,dl.google.com
 DOMAIN-SUFFIX,netease.com
