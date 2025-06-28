@@ -30,9 +30,6 @@ DOMAIN,api.bilibili.com
 DOMAIN,grpc.biliapi.net
 DOMAIN-SUFFIX,windowsupdate.com
 DOMAIN-SUFFIX,gamer520.com
-DOMAIN-SUFFIX,dl.google.com
-DOMAIN-SUFFIX,netease.com
-DOMAIN-SUFFIX,alidns.com
 DOMAIN-SUFFIX,dot.pub
 DOMAIN-SUFFIX,ihr360.com
 PROCESS-NAME,qq
