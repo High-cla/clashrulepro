@@ -1,3 +1,4 @@
+DOMAIN,dl.google.com
 DOMAIN-SUFFIX,cloudflarestorage.com
 #DOMAIN,api.bilibili.com
 DOMAIN-REGEX,^([a-z0-9-]+\.)*(short|long)\.weixin\.qq\.com(\.[a-z]{2,})?$
