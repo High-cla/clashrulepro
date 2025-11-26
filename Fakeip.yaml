@@ -1,43 +1,43 @@
-DOMAIN-KEYWORD,Mijia
-DOMAIN-KEYWORD,crl
-DOMAIN-KEYWORD,ocsp
-DOMAIN-KEYWORD,vpn
-DOMAIN-KEYWORD,lan
-DOMAIN-KEYWORD,local
-DOMAIN-KEYWORD,.arpa
-DOMAIN-KEYWORD,invalid
-DOMAIN-KEYWORD,example
-DOMAIN-KEYWORD,internal
-DOMAIN-KEYWORD,ip6-
-DOMAIN-KEYWORD,hostname
-DOMAIN-KEYWORD,broadcasthost
-DOMAIN-KEYWORD,market.xiaomi.com
-DOMAIN-KEYWORD,test
-DOMAIN-KEYWORD,time
-DOMAIN-KEYWORD,ntp
-DOMAIN-KEYWORD,xbox
-DOMAIN-SUFFIX,126.net
-DOMAIN-SUFFIX,taihe.com
-DOMAIN-SUFFIX,y.qq.com
-DOMAIN-SUFFIX,xiami.com
-DOMAIN-SUFFIX,msftconnecttest.com
-DOMAIN-SUFFIX,msftncsi.com
-DOMAIN-SUFFIX,ipv6.microsoft.com
-DOMAIN-SUFFIX,wargaming.net
-DOMAIN,proxy.golang.org
-DOMAIN,heartbeat.belkin.com
-DOMAIN-SUFFIX,linksys.com
-DOMAIN-SUFFIX,linksyssmartwifi.com
-DOMAIN-SUFFIX,router.asus.com
-DOMAIN,lens.l.google.com
-DOMAIN-SUFFIX,square-enix.com
-DOMAIN-SUFFIX,finalfantasyxiv.com
-DOMAIN-SUFFIX,ffxiv.com
-DOMAIN-SUFFIX,ff14.sdo.com
-DOMAIN,ff.dorado.sdo.com
-DOMAIN-SUFFIX,media.dssott.com
-DOMAIN-SUFFIX,pvp.net
 payload:
+  - DOMAIN-KEYWORD,Mijia
+  - DOMAIN-KEYWORD,crl
+  - DOMAIN-KEYWORD,ocsp
+  - DOMAIN-KEYWORD,vpn
+  - DOMAIN-KEYWORD,lan
+  - DOMAIN-KEYWORD,local
+  - DOMAIN-KEYWORD,.arpa
+  - DOMAIN-KEYWORD,invalid
+  - DOMAIN-KEYWORD,example
+  - DOMAIN-KEYWORD,internal
+  - DOMAIN-KEYWORD,ip6-
+  - DOMAIN-KEYWORD,hostname
+  - DOMAIN-KEYWORD,broadcasthost
+  - DOMAIN-KEYWORD,market.xiaomi.com
+  - DOMAIN-KEYWORD,test
+  - DOMAIN-KEYWORD,time
+  - DOMAIN-KEYWORD,ntp
+  - DOMAIN-KEYWORD,xbox
+  - DOMAIN-SUFFIX,126.net
+  - DOMAIN-SUFFIX,taihe.com
+  - DOMAIN-SUFFIX,y.qq.com
+  - DOMAIN-SUFFIX,xiami.com
+  - DOMAIN-SUFFIX,msftconnecttest.com
+  - DOMAIN-SUFFIX,msftncsi.com
+  - DOMAIN-SUFFIX,ipv6.microsoft.com
+  - DOMAIN-SUFFIX,wargaming.net
+  - DOMAIN-SUFFIX,linksys.com
+  - DOMAIN-SUFFIX,linksyssmartwifi.com
+  - DOMAIN-SUFFIX,router.asus.com
+  - DOMAIN-SUFFIX,square-enix.com
+  - DOMAIN-SUFFIX,finalfantasyxiv.com
+  - DOMAIN-SUFFIX,ffxiv.com
+  - DOMAIN-SUFFIX,ff14.sdo.com
+  - DOMAIN-SUFFIX,media.dssott.com
+  - DOMAIN-SUFFIX,pvp.net
+  - DOMAIN,proxy.golang.org
+  - DOMAIN,heartbeat.belkin.com
+  - DOMAIN,lens.l.google.com
+  - DOMAIN,ff.dorado.sdo.com
   - 'adguardteam.github.io'
   - 'adrules.top'
   - 'amobile.music.tc.qq.com'
@@ -46,11 +46,8 @@ payload:
   - 'api.joox.com'
   - 'aqqmusic.tc.qq.com'
   - 'dl.stream.qqmusic.qq.com'
-  - 'ff.dorado.sdo.com'
-  - 'heartbeat.belkin.com'
   - 'isure.stream.qqmusic.qq.com'
   - 'joox.com'
-  - 'lens.l.google.com'
   - 'local.adguard.org'
   - 'localhost.ptlogin2.qq.com'
   - 'localhost.sec.qq.com'
@@ -59,7 +56,6 @@ payload:
   - 'music.taihe.com'
   - 'musicapi.taihe.com'
   - 'na.b.g-tun.com'
-  - 'proxy.golang.org'
   - 'ps.res.netease.com'
   - 'shark007.net'
   - 'songsearch.kugou.com'
