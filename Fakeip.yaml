@@ -38,39 +38,39 @@ payload:
   - DOMAIN,heartbeat.belkin.com
   - DOMAIN,lens.l.google.com
   - DOMAIN,ff.dorado.sdo.com
-  - 'adguardteam.github.io'
-  - 'adrules.top'
-  - 'amobile.music.tc.qq.com'
-  - 'anti-ad.net'
-  - 'api-jooxtt.sanook.com'
-  - 'api.joox.com'
-  - 'aqqmusic.tc.qq.com'
-  - 'dl.stream.qqmusic.qq.com'
-  - 'isure.stream.qqmusic.qq.com'
-  - 'joox.com'
-  - 'local.adguard.org'
-  - 'localhost.ptlogin2.qq.com'
-  - 'localhost.sec.qq.com'
-  - 'mesu.apple.com'
-  - 'mobileoc.music.tc.qq.com'
-  - 'music.taihe.com'
-  - 'musicapi.taihe.com'
-  - 'na.b.g-tun.com'
-  - 'ps.res.netease.com'
-  - 'shark007.net'
-  - 'songsearch.kugou.com'
-  - 'static.adtidy.org'
-  - 'streamoc.music.tc.qq.com'
-  - 'stun.l.google.com'
-  - 'swcdn.apple.com'
-  - 'swdist.apple.com'
-  - 'swdownload.apple.com'
-  - 'swquery.apple.com'
-  - 'swscan.apple.com'
-  - 'time-ios.apple.com'
-  - 'time1.cloud.tencent.com'
-  - 'trackercdn.kugou.com'
-  - 'xnotify.xboxlive.com'
+  - adguardteam.github.io
+  - adrules.top
+  - amobile.music.tc.qq.com
+  - anti-ad.net
+  - api-jooxtt.sanook.com
+  - api.joox.com
+  - aqqmusic.tc.qq.com
+  - dl.stream.qqmusic.qq.com
+  - isure.stream.qqmusic.qq.com
+  - joox.com
+  - local.adguard.org
+  - localhost.ptlogin2.qq.com
+  - localhost.sec.qq.com
+  - mesu.apple.com
+  - mobileoc.music.tc.qq.com
+  - music.taihe.com
+  - musicapi.taihe.com
+  - na.b.g-tun.com
+  - ps.res.netease.com
+  - shark007.net
+  - songsearch.kugou.com
+  - static.adtidy.org
+  - streamoc.music.tc.qq.com
+  - stun.l.google.com
+  - swcdn.apple.com
+  - swdist.apple.com
+  - swdownload.apple.com
+  - swquery.apple.com
+  - swscan.apple.com
+  - time-ios.apple.com
+  - time1.cloud.tencent.com
+  - trackercdn.kugou.com
+  - xnotify.xboxlive.com
   - '*.*.xboxlive.com'
   - '+.stun.*.*'
   - '+.stun.*.*.*'
