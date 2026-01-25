@@ -10,6 +10,7 @@ DOMAIN-KEYWORD,mgw
 DOMAIN-KEYWORD,httpdns
 DOMAIN-KEYWORD,null
 DOMAIN-KEYWORD,undefined
+DOMAIN-KEYWORD,datareceiver
 DOMAIN-SUFFIX,account.sogou.com
 DOMAIN-SUFFIX,shouji.sogou.com
 DOMAIN-SUFFIX,pinyin.sogou.com
