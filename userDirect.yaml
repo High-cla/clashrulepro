@@ -37,8 +37,10 @@ DOMAIN-SUFFIX,steamtools.net
 DOMAIN-SUFFIX,steam.run
 DOMAIN-SUFFIX,dlidli.cc
 DOMAIN-SUFFIX,listdl.com
+IP-CIDR,43.157.119.41/32
 
 #可用规则格式如下https://wiki.metacubex.one/config/rules/
+
 
 
 
