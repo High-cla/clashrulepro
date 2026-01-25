@@ -11,6 +11,7 @@ DOMAIN-KEYWORD,httpdns
 DOMAIN-KEYWORD,null
 DOMAIN-KEYWORD,undefined
 DOMAIN-KEYWORD,datareceiver
+DOMAIN-KEYWORD,sdkapi
 DOMAIN-SUFFIX,account.sogou.com
 DOMAIN-SUFFIX,shouji.sogou.com
 DOMAIN-SUFFIX,pinyin.sogou.com
