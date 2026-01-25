@@ -10,7 +10,8 @@ DOMAIN-KEYWORD,mgw
 DOMAIN-KEYWORD,httpdns
 DOMAIN-KEYWORD,null
 DOMAIN-KEYWORD,undefined
-DOMAIN-KEYWORD,api
+DOMAIN-KEYWORD,datareceiver
+DOMAIN-KEYWORD,sdk
 DOMAIN-KEYWORD,back
 DOMAIN,sdk-prod-cdn-aws.kurogame-service.com
 DOMAIN,p.s.360.cn
