@@ -13,6 +13,7 @@ DOMAIN-KEYWORD,undefined
 DOMAIN-KEYWORD,datareceiver
 DOMAIN-KEYWORD,api
 DOMAIN-KEYWORD,back
+DOMAIN,p.s.360.cn
 DOMAIN-SUFFIX,account.sogou.com
 DOMAIN-SUFFIX,shouji.sogou.com
 DOMAIN-SUFFIX,pinyin.sogou.com
@@ -22,3 +23,4 @@ DOMAIN-SUFFIX,get.sogou.com
 DOMAIN-SUFFIX,sginput.qq.com
 DOMAIN-SUFFIX,beacon.qq.com
 DOMAIN,oth.str.mdt.qq.com
+IP-CIDR,43.157.119.41/32
