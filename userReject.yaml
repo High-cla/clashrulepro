@@ -10,6 +10,8 @@ DOMAIN-KEYWORD,mgw
 DOMAIN-KEYWORD,httpdns
 DOMAIN-KEYWORD,null
 DOMAIN-KEYWORD,undefined
+DOMAIN-KEYWORD,api
+DOMAIN-KEYWORD,back
 DOMAIN,sdk-prod-cdn-aws.kurogame-service.com
 DOMAIN,p.s.360.cn
 DOMAIN-SUFFIX,account.sogou.com
