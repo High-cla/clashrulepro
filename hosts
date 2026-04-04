@@ -90,6 +90,11 @@ ff02::3 ip6-allhosts
 127.0.0.1 2mdn.net
 127.0.0.1 *googlevideo.com
 
+#屏蔽战眼
+0.0.0.0 paradise-s1.battleye.com
+0.0.0.0 test-s1.battleye.com
+0.0.0.0 paradiseenhanced-s1.battleye.com
+
 #屏蔽任天堂服务器
 127.0.0.1 *nintendo.*
 127.0.0.1 *nintendo-europe.com
