@@ -39,6 +39,7 @@ DOMAIN-SUFFIX,dlidli.cc
 DOMAIN-SUFFIX,listdl.com
 DOMAIN-SUFFIX,linuxdo.com
 DOMAIN-SUFFIX,wenhope.com
+DOMAIN-SUFFIX,1wxyun.com
 IP-CIDR,43.157.119.41/32,no-resolve
 
 #可用规则格式如下https://wiki.metacubex.one/config/rules/
