@@ -44,7 +44,7 @@ DOMAIN-SUFFIX,tubemogul.com
 DOMAIN-SUFFIX,serving-sys.com
 DOMAIN-SUFFIX,analytic-google.com
 DOMAIN-SUFFIX,moatads.com
-DOMAIN-SUFFIX,battleye.com
+DOMAIN-SUFFIX,*-s1.battleye.com
 DOMAIN-REGEX,nintendo\..+
 DOMAIN-REGEX,nintendo-europe\.com
 DOMAIN-REGEX,nintendoswitch\..+
