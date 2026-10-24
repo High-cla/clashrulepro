@@ -51,4 +51,4 @@ DOMAIN-REGEX,nintendoswitch\..+
 DOMAIN-REGEX,^t[^.]*\.market\.xiaomi\.com$
 DOMAIN-REGEX,^(diagnosis|api|m\.track)\.ad\.xiaomi\.com$
 DOMAIN-SUFFIX,gjfzpt.cn
-DOMAIN-SUFFIX,mgr.gameguard.co.kr
+#DOMAIN-SUFFIX,mgr.gameguard.co.kr
