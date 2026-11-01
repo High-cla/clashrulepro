@@ -408,11 +408,23 @@ def main() -> int:
         else:
             seen[key] = rule
 
+    # These explicitly requested proxy keywords bypass only cross-policy overlap checks.
+    # Syntax validation, duplicate detection, and all other conflict checks remain enabled.
+    skip_cross_policy_conflicts = {
+        ("userProxy.yaml", "DOMAIN-KEYWORD", "null"),
+        ("userProxy.yaml", "DOMAIN-KEYWORD", "anti"),
+    }
+
     # Cross-policy conflict audit for domain rules and overlapping IP CIDRs.
     policy_rules = [rule for rule in rules if rule.policy]
     for index, left in enumerate(policy_rules):
         for right in policy_rules[index + 1:]:
             if left.policy == right.policy:
+                continue
+            if (
+                (left.path, left.kind, left.payload.casefold()) in skip_cross_policy_conflicts
+                or (right.path, right.kind, right.payload.casefold()) in skip_cross_policy_conflicts
+            ):
                 continue
             overlaps = False
             if left.network is not None and right.network is not None:
