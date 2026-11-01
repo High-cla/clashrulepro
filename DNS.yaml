@@ -16,6 +16,4 @@ DOMAIN,doh.cleanbrowsing.org
 DOMAIN,doh.mullvad.net
 DOMAIN,dns0.eu
 DOMAIN,zero.dns0.eu
-DST-PORT,853
-DST-PORT,784
-DST-PORT,8853
+
