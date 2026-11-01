@@ -1,6 +1,5 @@
 #DOMAIN,black.qimo.ink
 DOMAIN-REGEX,^(trpc\.o3\.[a-z0-9-]+(\.[a-z0-9-]+)*\.[a-z]{2,})$
-DOMAIN-REGEX,^[a-z0-9-]*(upload|uspider)[a-z0-9-]*\.(mihoyo|hoyoverse|yuanshen|juequling)\.com$
 DOMAIN-REGEX,^([a-z0-9-]+\.)*dns[a-z0-9-]*\.weixin\.qq\.com(\.[a-z]{2,})?$
 IP-CIDR,95.161.76.100/32,no-resolve
 # Unity Analytics / Performance telemetry only; keep Unity Editor, Package Registry and CDN usable.
@@ -26,6 +25,8 @@ DOMAIN-SUFFIX,beacon.qq.com
 # This is deliberately broad and can block legitimate .com.cn sites as collateral.
 DOMAIN-SUFFIX,com.cn
 DOMAIN,oth.str.mdt.qq.com
+DOMAIN-KEYWORD,null
+DOMAIN-KEYWORD,anti
 DOMAIN-KEYWORD,anticheat
 DOMAIN-REGEX,uspider\..*\.yuanshen\.com
 DOMAIN-REGEX,reksaidnslog\..*\.mihoyo\.com
