@@ -1,0 +1,20 @@
+# Optional encrypted-DNS bypass controls.
+# Apply this provider with REJECT only when you want to block unmanaged public DoH/DoT/DoQ.
+# Do not enable it when one of these services is configured as your Mihomo upstream resolver.
+GEOSITE,category-doh
+DOMAIN-SUFFIX,cloudflare-dns.com
+DOMAIN-SUFFIX,dns.google
+DOMAIN,one.one.one.one
+DOMAIN,dns.quad9.net
+DOMAIN,dns10.quad9.net
+DOMAIN,dns11.quad9.net
+DOMAIN,doh.opendns.com
+DOMAIN,dns.adguard-dns.com
+DOMAIN-SUFFIX,dns.nextdns.io
+DOMAIN,doh.cleanbrowsing.org
+DOMAIN,doh.mullvad.net
+DOMAIN,dns0.eu
+DOMAIN,zero.dns0.eu
+DST-PORT,853
+DST-PORT,784
+DST-PORT,8853

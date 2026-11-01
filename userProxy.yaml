@@ -3,7 +3,6 @@ DOMAIN-SUFFIX,cloudflarestorage.com
 DOMAIN-REGEX,^([a-z0-9-]+\.)*(short|long)\.weixin\.qq\.com(\.[a-z]{2,})?$
 DOMAIN-SUFFIX,iturrit.com
 #DOMAIN-KEYWORD,upos-
-DOMAIN-KEYWORD,cloudflare-dns
 DOMAIN-SUFFIX,googleapis.cn
 DOMAIN-SUFFIX,pornhub.com
 DOMAIN-SUFFIX,hcaptcha.com

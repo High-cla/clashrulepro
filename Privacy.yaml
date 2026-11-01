@@ -1,0 +1,5 @@
+# Privacy / telemetry / public tracker categories from the geosite database.
+# Apply with REJECT. Some apps may lose analytics, telemetry, crash reports or tracker connectivity.
+GEOSITE,category-ads-and-telemetry
+GEOSITE,category-telemetry
+GEOSITE,category-public-tracker
