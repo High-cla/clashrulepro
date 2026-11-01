@@ -86,7 +86,6 @@ tun:
     - "::/1"
     - "8000::/1"
   route-exclude-address:
-    # RFC1918 / CGNAT / loopback / link-local：避免把局域网与本机流量导入 TUN。
     - 10.0.0.0/8
     - 100.64.0.0/10
     - 127.0.0.0/8
@@ -129,12 +128,10 @@ dns:
     - rule-set:Fakeip-Keyword
 
 # --- YAML 锚点模板 ---
-# providers-anchor 仅承载 YAML 锚点；Mihomo 配置解析会忽略这个辅助键。
 providers-anchor:
   pr: &pr
     type: http
     interval: 86400
-    # 节点 UDP 能力由上游节点定义，不在 Provider 层强制覆盖。
     exclude-type: direct
     health-check:
       enable: true
@@ -189,6 +186,13 @@ proxy-providers:
       additional-prefix: "[机场2-公开免费]"
       # 不继承未知订阅的 skip-cert-verify: true，恢复 TLS 证书校验。
       skip-cert-verify: false
+      udp: true
+      udp-over-tcp: true
+      tfo: true
+      mptcp: true
+      override-expr:
+        - '(select(.type == "vless" or .type == "vmess") | .packet-encoding) = "xudp"'
+        - '.smux = {"enabled": true, "protocol": "h2mux", "max-connections": 16, "only-tcp": true, "padding": true}'
 
   # 机场3：Zhuhai Free Nodes，官方 README 标注每小时更新。
   机场3:
@@ -200,8 +204,14 @@ proxy-providers:
     exclude-type: "direct|http|socks5"
     override:
       additional-prefix: "[机场3-公开免费]"
-      # 不继承未知订阅的 skip-cert-verify: true，恢复 TLS 证书校验。
       skip-cert-verify: false
+      udp: true
+      udp-over-tcp: true
+      tfo: true
+      mptcp: true
+      override-expr:
+        - '(select(.type == "vless" or .type == "vmess") | .packet-encoding) = "xudp"'
+        - '.smux = {"enabled": true, "protocol": "h2mux", "max-connections": 16, "only-tcp": true, "padding": true}'
   机场5:
     <<: *pr
     url: "https://"
@@ -209,7 +219,6 @@ proxy-providers:
     override:
       additional-prefix: "[机场5]"
       udp: true
-      # udp-over-tcp 是 Shadowsocks 节点专用覆盖项；xudp 由下方按 VLESS/VMess 类型设置。
       udp-over-tcp: true
       tfo: true
       mptcp: true
@@ -222,9 +231,13 @@ proxy-providers:
     path: ./proxy_providers/机场6.yaml
     override:
       additional-prefix: "[机场6]"
-      udp: false
+      udp: true
+      udp-over-tcp: true
+      tfo: true
+      mptcp: true
       override-expr:
-        - '.smux = {"enabled": true, "protocol": "h2mux", "max-streams": 8, "only-tcp": true, "padding": false}'
+        - '(select(.type == "vless" or .type == "vmess") | .packet-encoding) = "xudp"'
+        - '.smux = {"enabled": true, "protocol": "h2mux", "max-connections": 16, "only-tcp": true, "padding": true}'
 
 # --- 策略组 ---
 proxy-groups:
@@ -509,27 +522,27 @@ rule-providers:
 
 rules:
   - RULE-SET,userReject,REJECT,no-resolve
+  - RULE-SET,private-ip,DIRECT,no-resolve
+  - RULE-SET,private,DIRECT
   - RULE-SET,NoBanDirect,DIRECT
   - RULE-SET,userDirect,DIRECT
   - DOMAIN,159277.alidns.com,DIRECT
   - RULE-SET,userProxy,代理
   - DOMAIN,security.cloudflare-dns.com,代理
   - RULE-SET,doh-geosite,REJECT,no-resolve
-  - RULE-SET,DNS-Domain,REJECT
-  - RULE-SET,DNS-Port,REJECT
+  - RULE-SET,DNS-Domain,REJECT,no-resolve
+  - RULE-SET,DNS-Port,REJECT,no-resolve
   - RULE-SET,phishing-army,REJECT,no-resolve
   - RULE-SET,privacy-telemetry,REJECT,no-resolve
   - RULE-SET,privacy-tracker,REJECT,no-resolve
   - RULE-SET,秋风广告规则,REJECT,no-resolve
-  - RULE-SET,pcdn-domain,REJECT
+  - RULE-SET,pcdn-domain,REJECT,no-resolve
   - RULE-SET,pcdn-ip,REJECT,no-resolve
-  - RULE-SET,pcdn-keyword,REJECT
-  - RULE-SET,Advertising-Domain,REJECT
+  - RULE-SET,pcdn-keyword,REJECT,no-resolve
+  - RULE-SET,Advertising-Domain,REJECT,no-resolve
   - RULE-SET,Advertising-IP,REJECT,no-resolve
-  - RULE-SET,Advertising-Keyword,REJECT
-  - RULE-SET,private-ip,DIRECT,no-resolve
+  - RULE-SET,Advertising-Keyword,REJECT,no-resolve
   - RULE-SET,hk-ip,DIRECT,no-resolve
-  - RULE-SET,private,DIRECT
   - RULE-SET,microsoft_cdn,DIRECT
   - RULE-SET,microsoft@cn,DIRECT
   - RULE-SET,cloudflare@cn,DIRECT
