@@ -41,5 +41,8 @@ DOMAIN-SUFFIX,agnes-ai.com
 DOMAIN-SUFFIX,linuxdo.org
 DOMAIN-SUFFIX,playfabapi.com
 IP-CIDR,43.157.119.41/32,no-resolve
+DST-PORT,853
+DST-PORT,784
+DST-PORT,8853
 
 #可用规则格式如下https://wiki.metacubex.one/config/rules/
