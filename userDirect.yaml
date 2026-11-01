@@ -2,13 +2,13 @@ DOMAIN-SUFFIX,akamaized.net
 DOMAIN-REGEX,^r+[0-9]+(---|\.)sn-(2x3|ni5|j5o)\w{5}\.xn--ngstr-lra8j\.com$
 DOMAIN-REGEX,^r+[0-9]+(---|\.)sn-(2x3|ni5|j5o)\w{5}\.googlevideo\.com$
 DOMAIN,redirector.c.play.google.com
-DOMAIN-KEYWORD,local
-DOMAIN-KEYWORD,.arpa
-DOMAIN-KEYWORD,invalid
-DOMAIN-KEYWORD,example
-DOMAIN-KEYWORD,ip6-
-DOMAIN-KEYWORD,hostname
-DOMAIN-KEYWORD,broadcasthost
+DOMAIN-KEYWORD,local,no-resolve
+DOMAIN-KEYWORD,.arpa,no-resolve
+DOMAIN-KEYWORD,invalid,no-resolve
+DOMAIN-KEYWORD,example,no-resolve
+DOMAIN-KEYWORD,ip6-,no-resolve
+DOMAIN-KEYWORD,hostname,no-resolve
+DOMAIN-KEYWORD,broadcasthost,no-resolve
 DOMAIN-KEYWORD,china
 DOMAIN-KEYWORD,chinese
 DOMAIN-KEYWORD,upos-
@@ -41,8 +41,8 @@ DOMAIN-SUFFIX,agnes-ai.com
 DOMAIN-SUFFIX,linuxdo.org
 DOMAIN-SUFFIX,playfabapi.com
 IP-CIDR,43.157.119.41/32,no-resolve
-DST-PORT,853
-DST-PORT,784
-DST-PORT,8853
+DST-PORT,853,no-resolve
+DST-PORT,784,no-resolve
+DST-PORT,8853,no-resolve
 
 #可用规则格式如下https://wiki.metacubex.one/config/rules/
