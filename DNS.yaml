@@ -1,7 +1,8 @@
 # Optional encrypted-DNS bypass controls.
+# This classical set is combined with MetaCubeX category-doh MRS in the uploaded Mihomo profile.
 # Apply this provider with REJECT only when you want to block unmanaged public DoH/DoT/DoQ.
 # Do not enable it when one of these services is configured as your Mihomo upstream resolver.
-GEOSITE,category-doh
+# Broad DoH coverage is supplied by MetaCubeX category-doh MRS in the Mihomo profile.
 DOMAIN-SUFFIX,cloudflare-dns.com
 DOMAIN-SUFFIX,dns.google
 DOMAIN,one.one.one.one

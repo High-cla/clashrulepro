@@ -378,11 +378,9 @@ def main() -> int:
                 )
 
     # Highlight unusually broad legacy rules without blocking their intentional use.
+    # Intentional high-risk policy: whole .com.cn suffix blocking is documented in userReject.yaml.
     broad_rules = {
-        ("userReject.yaml", "DOMAIN-SUFFIX", "com.cn"): "blocks every .com.cn domain",
-        ("userReject.yaml", "DOMAIN-SUFFIX", "unity3d.com"): "blocks the whole Unity domain",
-        ("userReject.yaml", "DOMAIN-SUFFIX", "googlevideo.com"): "may break YouTube video delivery",
-        ("userReject.yaml", "DOMAIN-KEYWORD", "anti"): "may match unrelated security/anti-abuse domains",
+        ("userReject.yaml", "DOMAIN-SUFFIX", "com.cn"): "intentional whole-suffix deny; legitimate .com.cn sites may also be blocked",
     }
     for rule in rules:
         if (rule.path, rule.kind, rule.payload.lower()) in broad_rules:

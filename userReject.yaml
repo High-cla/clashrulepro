@@ -1,14 +1,15 @@
 #DOMAIN,black.qimo.ink
 DOMAIN-REGEX,^(trpc\.o3\.[a-z0-9-]+(\.[a-z0-9-]+)*\.[a-z]{2,})$
 DOMAIN-REGEX,^[a-z0-9-]*(upload|uspider)[a-z0-9-]*\.(mihoyo|hoyoverse|yuanshen|juequling)\.com$
-DOMAIN-REGEX,^[a-z0-9-]*prd[a-z0-9-]*\.unity3d\.com$
 DOMAIN-REGEX,^([a-z0-9-]+\.)*dns[a-z0-9-]*\.weixin\.qq\.com(\.[a-z]{2,})?$
 IP-CIDR,95.161.76.100/32,no-resolve
-DOMAIN-SUFFIX,cdp.cloud.unity3d.com
-DOMAIN-KEYWORD,anti
+# Unity Analytics / Performance telemetry only; keep Unity Editor, Package Registry and CDN usable.
+DOMAIN,cdp.cloud.unity3d.com
+DOMAIN,perf.cloud.unity3d.com
+DOMAIN,perf-events.cloud.unity3d.com
+DOMAIN,prd-lender.cdp.internal.unity3d.com
 DOMAIN-KEYWORD,mgw
 DOMAIN-KEYWORD,httpdns
-DOMAIN-KEYWORD,null
 DOMAIN-KEYWORD,undefined
 DOMAIN-KEYWORD,datareceiver
 DOMAIN,sdk-prod-cdn-aws.kurogame-service.com
@@ -21,10 +22,11 @@ DOMAIN-SUFFIX,ime.sogou.com
 DOMAIN-SUFFIX,get.sogou.com
 DOMAIN-SUFFIX,sginput.qq.com
 DOMAIN-SUFFIX,beacon.qq.com
+# HIGH-RISK deny: intentionally block the entire .com.cn suffix because Silver Fox fake-download infrastructure has used .com.cn domains.
+# This is deliberately broad and can block legitimate .com.cn sites as collateral.
 DOMAIN-SUFFIX,com.cn
 DOMAIN,oth.str.mdt.qq.com
 DOMAIN-KEYWORD,anticheat
-DOMAIN-SUFFIX,unity3d.com
 DOMAIN-REGEX,uspider\..*\.yuanshen\.com
 DOMAIN-REGEX,reksaidnslog\..*\.mihoyo\.com
 DOMAIN-REGEX,upload\..*\.(mihoyo|hoyoverse|yuanshen|juequling)\.com
@@ -35,8 +37,6 @@ DOMAIN-SUFFIX,googleadservices.com
 DOMAIN-SUFFIX,google-analytics.com
 DOMAIN-SUFFIX,googletagservices.com
 DOMAIN-SUFFIX,googletagmanager.com
-DOMAIN-SUFFIX,googlevideo.com
-DOMAIN-SUFFIX,ytimg.com
 DOMAIN-SUFFIX,innovid.com
 DOMAIN-SUFFIX,2mdn.net
 DOMAIN-SUFFIX,fwmrm.net
@@ -44,7 +44,7 @@ DOMAIN-SUFFIX,tubemogul.com
 DOMAIN-SUFFIX,serving-sys.com
 DOMAIN-SUFFIX,analytic-google.com
 DOMAIN-SUFFIX,moatads.com
-DOMAIN-REGEX,^[a-z0-9.-]+-s1\.battleye\.com$
+DOMAIN-WILDCARD,*-s1.battleye.com
 DOMAIN-REGEX,nintendo\..+
 DOMAIN-REGEX,nintendo-europe\.com
 DOMAIN-REGEX,nintendoswitch\..+

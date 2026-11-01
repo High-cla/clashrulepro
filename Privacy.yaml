@@ -1,5 +1,5 @@
-# Privacy / telemetry / public tracker categories from the geosite database.
-# Apply with REJECT. Some apps may lose analytics, telemetry, crash reports or tracker connectivity.
-GEOSITE,category-ads-and-telemetry
+# Direct GEOSITE rules for users with a compatible geosite database.
+# The uploaded Mihomo profile uses MetaCubeX MRS providers for these categories instead.
+# Ads are kept separate (AWAvenue Only.Ads + the existing Advertising provider).
 GEOSITE,category-telemetry
-GEOSITE,category-public-tracker
+GEOSITE,tracker

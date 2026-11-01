@@ -40,13 +40,13 @@ googleapis.com googleapis.cn
 127.0.0.1 *upload*.yuanshen.com
 127.0.0.1 *upload*.juequling.com
 
-#如果怕封号,下面几行也可以加入,但会让你没法使用Unity编辑器
-127.0.0.1 *prd*.unity3d.com
+# 仅屏蔽 Unity Analytics / Performance telemetry，不封锁 Unity Editor、Package Registry 或 CDN。
 127.0.0.1 cdp.cloud.unity3d.com
+127.0.0.1 perf.cloud.unity3d.com
+127.0.0.1 perf-events.cloud.unity3d.com
 
 #Switch屏蔽广告
 127.0.0.1 ads.doubleclick.net
-127.0.0.1 s.ytimg.com
 127.0.0.1 ad.youtube.com
 127.0.0.1 ads.youtube.com
 127.0.0.1 clients1.google.com
@@ -86,8 +86,6 @@ googleapis.com googleapis.cn
 127.0.0.1 fwmrm.net
 127.0.0.1 innovid.com
 127.0.0.1 2mdn.net
-127.0.0.1 *googlevideo.com
-
 #屏蔽战眼
 0.0.0.0 paradise-s1.battleye.com
 0.0.0.0 test-s1.battleye.com

@@ -1,85 +1,53 @@
 # ClashRulePro
 
-自定义 Clash / Mihomo 规则补充集，保留本仓库已有的自定义直连、代理、拦截、Fake-IP 与 PCDN 规则。
+自定义 Clash / Mihomo 规则补充集，侧重自定义直连、代理、拦截、Fake-IP、PCDN 与隐私/安全规则。
 
-## 新增规则
+## 当前规则文件
 
-| 文件 | 用途 | 建议策略 |
+| 文件 | 用途 | 建议策略 / 用法 |
 |---|---|---|
-| \`DNS.yaml\` | 已知公共 DoH 域名，以及常见 DoT / DoQ 端口 | REJECT（按需启用） |
-| \`Malware-Provider.yaml\` | Phishing Army 动态钓鱼域名订阅配置片段 | REJECT |
-| \`Privacy.yaml\` | 广告/遥测/公共 Tracker 的 GeoSite 分类 | REJECT（按需启用） |
-| \`Private.yaml\` | 本地域名、RFC1918、回环、链路本地、IPv6 ULA | DIRECT |
+| `DNS.yaml` | 常见公共 DoH/DoT/DoQ 域名与端口 | classical provider，REJECT |
+| `Malware-Provider.yaml` | Phishing Army 动态钓鱼域名订阅配置片段 | domain provider，REJECT |
+| `Privacy.yaml` | GeoSite telemetry / tracker 规则片段 | 直接加入 rules；或使用下文 MetaCubeX MRS |
+| `Private.yaml` | 局域网域名、RFC1918、回环、链路本地、IPv6 ULA | classical provider，DIRECT |
+| `pcdn.yaml` | PCDN / MCDN 相关规则 | classical provider，REJECT |
+| `userDirect.yaml` | 自定义直连规则 | DIRECT |
+| `userProxy.yaml` | 自定义代理规则 | PROXY |
+| `userReject.yaml` | 自定义安全、隐私和广告拦截规则 | REJECT |
 
-\`DNS.yaml\` 和 \`Privacy.yaml\` 使用 \`GEOSITE\`，需要 Mihomo 以及包含对应分类的 geosite 数据库。建议使用 MetaCubeX/meta-rules-dat 或兼容的 v2fly geosite 数据。
+## 上游规则整合策略
 
-### 规则提供者示例
+本仓库不复制整份上游规则，而是优先引用上游维护的数据：
 
-这些文件是 classical 规则内容，可按需加入现有配置的 \`rule-providers\`。以下只展示新增部分：
+- [MetaCubeX/meta-rules-dat](https://github.com/MetaCubeX/meta-rules-dat)：`category-doh`、`category-telemetry`、`tracker` 等 MRS 分类。
+- [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script)：YouTube 与 Advertising 等应用规则。
+- [TG-Twilight/AWAvenue-Ads-Rule](https://github.com/TG-Twilight/AWAvenue-Ads-Rule)：使用 `Only.Ads` 变体，将广告规则与 PCDN / telemetry / tracker 策略拆开，降低规则集重复。
 
-\`\`\`yaml
-rule-providers:
-  private-extra:
-    type: http
-    behavior: classical
-    format: text
-    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/main/Private.yaml"
-    path: ./ruleset/private-extra.yaml
-    interval: 86400
+## 关于 .com.cn 高风险拦截
 
-  dns-bypass:
-    type: http
-    behavior: classical
-    format: text
-    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/main/DNS.yaml"
-    path: ./ruleset/dns-bypass.yaml
-    interval: 86400
+`userReject.yaml` 保留 `DOMAIN-SUFFIX,com.cn` 作为**有意设置的整后缀封锁策略**。公开威胁研究已记录 Silver Fox 仿冒软件下载活动大量使用 .com.cn 等域名；该策略采取 fail-closed 取舍，会同时影响合法 .com.cn 网站。若要降低误杀，应改用经核验的具体 IOC 域名列表，而不是误认为后缀中的每个注册域都已被单独证实为恶意。
 
-  privacy:
-    type: http
-    behavior: classical
-    format: text
-    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/main/Privacy.yaml"
-    path: ./ruleset/privacy.yaml
-    interval: 86400
-\`\`\`
+## DNS 防绕过说明
 
-在现有 \`rules\` 中，建议将局域网直连放在较前位置，并将 DNS / 威胁情报拦截放在通用代理和 MATCH 之前：
+`DNS.yaml` 覆盖常见公共加密 DNS 域名及端口 853（DoT）、784 / 8853（DoQ）。它与 MetaCubeX `category-doh.mrs` 联合使用，补足域名分类覆盖。
 
-\`\`\`yaml
-rules:
-  - RULE-SET,private-extra,DIRECT
-  - RULE-SET,dns-bypass,REJECT
-  - RULE-SET,privacy,REJECT
-  # 将其他现有规则接在这里
-  # ...
-  - MATCH,PROXY
-\`\`\`
+上传的 Mihomo 配置使用两个 DoT 上游：
+- `security.cloudflare-dns.com`：通过代理连接。
+- `159277.alidns.com`：通过 DIRECT 连接，用于代理节点解析和 direct DNS。
 
-不要重复创建已有的 \`rule-providers\` 或 \`rules\` 顶层键；应将条目合并到现有配置。
+配置中必须在 DNS REJECT 规则前为这两个上游主机名设置明确例外，并将 TLS sniff 端口增加 853；否则 853 端口规则可能拦截 Mihomo 自己的上游 DNS。即使如此，任意自建 DoH（尤其是伪装在 TCP/443 上或直接使用 IP 的服务）仍无法仅靠静态域名规则完全识别。
 
-### DNS 防绕过的边界
+TUN DNS 劫持 `any:53` 和 `tcp://any:53` 可接管常规明文 DNS；DoT / DoQ / DoH 需要结合路由规则、TLS SNI 和上游例外配置。部署后应检查 DNS 日志，确认两个上游解析器都能正常连接。
 
-- 规则覆盖已知公共 DoH 主机，以及常见 DoT / DoQ 端口 853、784、8853。
-- 不能仅靠域名规则识别任意伪装在 TCP/443 上的自建 DoH 服务，也不能保证覆盖所有硬编码 IP 的 DNS 客户端。
-- 如需强制设备使用 Mihomo DNS，还应正确启用 TUN DNS 劫持（例如 \`any:53\` 和 \`tcp://any:53\`）并检查 DNS 配置。
-- 如果上述公共 DNS 服务被配置为 Mihomo 的上游 nameserver，不要启用对应 REJECT 规则，否则可能导致 DNS 解析失败。
+## Unity 与 YouTube 规则取舍
 
-### 恶意网站 / 钓鱼域名订阅
+- 不再封锁整个 `unity3d.com`。只屏蔽 Unity 官方文档列出的 Analytics / Performance 端点（CDP、perf、perf-events、内部 CDP relay），保留 Unity Editor、Package Registry、下载 CDN。
+- 不再封锁整个 `googlevideo.com` 或 `ytimg.com`。Blackmatrix7 的 YouTube 分流集包含这些媒体域名，配置改为让 YouTube 相关流量走代理；原有明确的 Googlevideo 直连正则例外仍排在 YouTube 规则之前。
+- BattleEye 使用 Mihomo 支持的 `DOMAIN-WILDCARD,*-s1.battleye.com`。
+- 删除过宽的 `DOMAIN-KEYWORD,null` 与单独的 `DOMAIN-KEYWORD,anti`；保留更具体的 `anticheat` 关键词。
 
-\`Malware-Provider.yaml\` 是 Mihomo 配置片段，不是 classical 域名规则文件。将其中的 \`rule-providers.phishing-army\` 合并进现有配置，并把 \`RULE-SET,phishing-army,REJECT\` 合并到现有 \`rules\`。它直接订阅 Phishing Army 的域名 feed，不在本仓库复制第三方威胁情报数据。该 feed 聚焦钓鱼域名，不等于完整恶意软件、C2 或恶意 IP 情报库；商业用途应自行核对其上游数据源的许可条件。
+## GitHub Actions 自动检查
 
-### 隐私追踪规则
+推送、PR 和手动触发时运行 `scripts/validate_rules.py`，检查规则类型、字段数量、域名 / CIDR / 端口格式、重复域名和 IP、Go RE2 不兼容正则，以及 DIRECT / PROXY / REJECT 之间可静态判断的冲突。
 
-\`Privacy.yaml\` 使用 \`category-ads-and-telemetry\`、\`category-telemetry\` 和 \`category-public-tracker\`。这些集合可能拦截统计、崩溃上报和公共 Tracker，建议先在测试配置中启用，确认没有影响需要的应用后再长期使用。
-
-## 自动检查
-
-GitHub Actions 在推送、PR 和手动触发时运行 \`scripts/validate_rules.py\`，检查：
-
-1. 规则类型、字段数量和域名 / CIDR / 端口格式。
-2. 重复域名规则和重复 IP 网段。
-3. DOMAIN-REGEX 的 Python 语法，以及 Go RE2 不支持的前瞻、后顾和反向引用。
-4. DIRECT、PROXY、REJECT 规则集之间可静态判断的域名和 CIDR 重叠。
-
-GeoSite 分类由外部 geosite 数据库定义，远程 Phishing Army feed 在运行时拉取；本地静态检查无法展开这两类动态集合并证明其完整语义无冲突。正则之间的语言交集也不能在一般情况下完全静态判定。
+静态检查不能完整判定任意正则之间的语言交集，也不会下载并展开外部 MRS 或实时钓鱼订阅；这些属于外部动态数据的运行期验证范围。
