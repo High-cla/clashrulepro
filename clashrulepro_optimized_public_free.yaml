@@ -137,17 +137,17 @@ providers-anchor:
     exclude-type: direct
     health-check:
       enable: true
-      url: "https://www.gstatic.com/generate_204"
+      url: "https://www.g.cn/generate_204"
       interval: 300
-      timeout: 5000
+      timeout: 1000
       lazy: true
       expected-status: 204
 
   p: &p
-    url: "https://www.gstatic.com/generate_204"
+    url: "https://www.g.cn/generate_204"
     interval: 300
     lazy: true
-    timeout: 5000
+    timeout: 1000
     max-failed-times: 2
     expected-status: 204
 
@@ -387,12 +387,6 @@ rule-providers:
     path: ./rule_providers/tracker.mrs
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tracker.mrs"
 
-  YouTube:
-    <<: *cl
-    format: yaml
-    path: ./rule_providers/YouTube.yaml
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/YouTube/YouTube.yaml"
-
   Advertising:
     <<: *cl
     path: ./rule_providers/Advertising.list
@@ -490,51 +484,38 @@ rule-providers:
       - DOMAIN-SUFFIX,cloudflarechallenge.com
 
 rules:
-  # Keep local / private destinations out of proxy and reject policies.
-  - RULE-SET,private,DIRECT
-  - RULE-SET,private-ip,DIRECT,no-resolve
-  - RULE-SET,NoBanDirect,DIRECT
-
-  # DoT upstream exceptions must precede DNS REJECT rules.
-  - DOMAIN,security.cloudflare-dns.com,代理
-  - DOMAIN,159277.alidns.com,DIRECT
-  - RULE-SET,doh-geosite,REJECT
-  - RULE-SET,dns-bypass,REJECT
-
-  # Threat-intel and privacy categories.
-  - RULE-SET,phishing-army,REJECT
-  - RULE-SET,privacy-telemetry,REJECT
-  - RULE-SET,privacy-tracker,REJECT
-
-  # Custom policy sets.
   - RULE-SET,userReject,REJECT,no-resolve
-  - RULE-SET,userProxy,代理
+  - RULE-SET,NoBanDirect,DIRECT
   - RULE-SET,userDirect,DIRECT
-
-  # YouTube is proxied after explicit userDirect exceptions.
-  - RULE-SET,YouTube,代理
-
-  # Ads-only upstream variant; PCDN and telemetry are maintained separately.
+  - DOMAIN,159277.alidns.com,DIRECT
+  - RULE-SET,userProxy,代理
+  - DOMAIN,security.cloudflare-dns.com,代理
+  - RULE-SET,doh-geosite,REJECT,no-resolve
+  - RULE-SET,dns-bypass,REJECT,no-resolve
+  - RULE-SET,phishing-army,REJECT,no-resolve
+  - RULE-SET,privacy-telemetry,REJECT,no-resolve
+  - RULE-SET,privacy-tracker,REJECT,no-resolve
   - RULE-SET,秋风广告规则,REJECT,no-resolve
   - RULE-SET,pcdn,REJECT,no-resolve
   - RULE-SET,Advertising,REJECT,no-resolve
-  - RULE-SET,cloudflare,代理
-  - RULE-SET,gfw,代理
-  - RULE-SET,porn,代理
+  - RULE-SET,private-ip,DIRECT,no-resolve
+  - RULE-SET,hk-ip,DIRECT,no-resolve
+  - RULE-SET,private,DIRECT
   - RULE-SET,microsoft_cdn,DIRECT
   - RULE-SET,microsoft@cn,DIRECT
   - RULE-SET,cloudflare@cn,DIRECT
   - RULE-SET,GameDownload,DIRECT
   - RULE-SET,tvbox,DIRECT
-  # Steam CDN 直连不可达：解析到中国移动定向 CDN（39.136/60.9 段），必须走代理
-  - DOMAIN-SUFFIX,eccdnx.com,代理
-  - DOMAIN-SUFFIX,steamcontent.com,代理
-  - DOMAIN-SUFFIX,clngaa.com,代理
   - RULE-SET,china-ASN,DIRECT
   - RULE-SET,GoogleFCM,DIRECT
   - RULE-SET,steam-cn,DIRECT
   - RULE-SET,google-cn,DIRECT
   - RULE-SET,games-cn,DIRECT
   - RULE-SET,cn,DIRECT
-  - RULE-SET,hk-ip,DIRECT,no-resolve
+  - DOMAIN-SUFFIX,eccdnx.com,代理
+  - DOMAIN-SUFFIX,steamcontent.com,代理
+  - DOMAIN-SUFFIX,clngaa.com,代理
+  - RULE-SET,cloudflare,代理
+  - RULE-SET,gfw,代理
+  - RULE-SET,porn,代理
   - MATCH,代理
