@@ -191,9 +191,9 @@ proxy-providers:
       udp-over-tcp: true
       tfo: true
       mptcp: true
-      override-expr:
-        - '(select(.type == "vless" or .type == "vmess") | .packet-encoding) = "xudp"'
-        - '.smux = {"enabled": true, "protocol": "h2mux", "max-connections": 16, "only-tcp": true, "padding": true}'
+#      override-expr:
+#        - '(select(.type == "vless" or .type == "vmess") | .packet-encoding) = "xudp"'
+#        - '.smux = {"enabled": true, "protocol": "h2mux", "max-connections": 16, "only-tcp": true, "padding": true}'
 
   # 机场3：Zhuhai Free Nodes，官方 README 标注每小时更新。
   机场3:
@@ -215,7 +215,7 @@ proxy-providers:
         - '.smux = {"enabled": true, "protocol": "h2mux", "max-connections": 16, "only-tcp": true, "padding": true}'
   机场5:
     <<: *pr
-    url: "https://"
+    url: "https"
     path: ./proxy_providers/机场5.yaml
     override:
       additional-prefix: "[机场5]"
@@ -223,12 +223,12 @@ proxy-providers:
       udp-over-tcp: true
       tfo: true
       mptcp: true
-      override-expr:
-        - '(select(.type == "vless" or .type == "vmess") | .packet-encoding) = "xudp"'
-        - '.smux = {"enabled": true, "protocol": "h2mux", "max-connections": 16, "only-tcp": true, "padding": true}'
+#      override-expr:
+#        - '(select(.type == "vless" or .type == "vmess") | .packet-encoding) = "xudp"'
+#        - '.smux = {"enabled": true, "protocol": "h2mux", "max-connections": 16, "only-tcp": true, "padding": true}'
   机场6:
     <<: *pr
-    url: "https://"
+    url: "https"
     path: ./proxy_providers/机场6.yaml
     override:
       additional-prefix: "[机场6]"
@@ -522,7 +522,7 @@ rule-providers:
       - DOMAIN-SUFFIX,cloudflarechallenge.com
 
 rules:
-  - AND,((DOMAIN-REGEX,^[a-z0-9-]*(upload|log|uspider)[a-z0-9-]*\.(mihoyo|hoyoverse|yuanshen|juequling)\.com$),(NOT,((DOMAIN-KEYWORD,login)))),REJECT,no-resolve
+  - AND,((DOMAIN-REGEX,^[a-z0-9-]*(upload|log|uspider)[a-z0-9-]*\.(mihoyo|hoyoverse|yuanshen|juequling)\.com$),(NOT,((DOMAIN-KEYWORD,login)))),REJECT
   - RULE-SET,userReject,REJECT,no-resolve
   - RULE-SET,private-ip,DIRECT,no-resolve
   - RULE-SET,private,DIRECT
