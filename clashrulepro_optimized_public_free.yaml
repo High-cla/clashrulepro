@@ -1,0 +1,540 @@
+# --- 端口 ---
+mixed-port: 7890
+ipv6: false
+tcp-concurrent: true
+etag-support: true
+global-ua: clash.meta
+log-level: warning
+
+# --- TCP Keep-Alive ---
+keep-alive-idle: 30
+keep-alive-interval: 30
+
+# --- 实验性 ---
+experimental:
+  quic-go-disable-gso: true
+  quic-go-disable-ecn: true
+
+# --- 缓存 ---
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+# --- 嗅探 ---
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443, 853]
+    QUIC:
+      ports: [443, 8443]
+  skip-domain:
+    - +.push.apple.com
+    - Mijia Cloud
+    - dlg.io.mi.com
+    - +.jd.com
+    - +.taobao.com
+    - +.tmall.com
+    - +.1wxyun.com
+  skip-src-address:
+    - 10.0.0.0/8
+    - 100.64.0.0/10
+    - 127.0.0.0/8
+    - 169.254.0.0/16
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+    - ::1/128
+    - fc00::/7
+    - fe80::/10
+  skip-dst-address:
+    - 10.0.0.0/8
+    - 100.64.0.0/10
+    - 127.0.0.0/8
+    - 169.254.0.0/16
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+    - ::1/128
+    - fc00::/7
+    - fe80::/10
+
+# --- TUN ---
+tun:
+  enable: true
+  stack: mips
+  auto-route: true
+  auto-redirect: true
+  auto-detect-interface: true
+  dns-hijack:
+    - any:53
+    - tcp://any:53
+  strict-route: true
+  gso: true
+  gso-max-size: 65536
+  endpoint-independent-nat: true
+  udp-timeout: 300
+  mtu: 4096
+  congestion-controller: bbr3
+  route-address:
+    - 0.0.0.0/1
+    - 128.0.0.0/1
+    - "::/1"
+    - "8000::/1"
+  route-exclude-address:
+    # RFC1918 / CGNAT / loopback / link-local：避免把局域网与本机流量导入 TUN。
+    - 10.0.0.0/8
+    - 100.64.0.0/10
+    - 127.0.0.0/8
+    - 169.254.0.0/16
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+    - ::1/128
+    - fc00::/7
+    - fe80::/10
+    - ff00::/8
+
+# --- DNS ---
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: redir-host
+  cache-algorithm: arc
+  use-system-hosts: true
+  # 用 IP 引导解析加密 DNS 主机名，避免 nameserver 本身出现解析依赖环。
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  nameserver-policy:
+    "+.arpa": '10.0.0.1'
+    "rule-set:NoBanDirect":
+      - tls://security.cloudflare-dns.com#代理&ecs=103.151.172.0/24
+  nameserver:
+    - tls://security.cloudflare-dns.com#代理&ecs=103.151.172.0/24
+  proxy-server-nameserver:
+    - tls://159277.alidns.com#DIRECT
+  direct-nameserver:
+    - tls://159277.alidns.com#DIRECT
+  # 当前 enhanced-mode 为 redir-host；切换到 fake-ip 时以下过滤列表才会生效。
+  fake-ip-filter:
+    - '*.lan'
+    - +.lan
+    - +.local
+    - rule-set:private
+    - rule-set:Fakeip
+
+# --- YAML 锚点模板 ---
+# providers-anchor 仅承载 YAML 锚点；Mihomo 配置解析会忽略这个辅助键。
+providers-anchor:
+  pr: &pr
+    type: http
+    interval: 86400
+    # 节点 UDP 能力由上游节点定义，不在 Provider 层强制覆盖。
+    exclude-type: direct
+    health-check:
+      enable: true
+      url: "https://www.gstatic.com/generate_204"
+      interval: 300
+      timeout: 5000
+      lazy: true
+      expected-status: 204
+
+  p: &p
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    lazy: true
+    timeout: 5000
+    max-failed-times: 2
+    expected-status: 204
+
+  cl: &cl
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+
+  cm: &cm
+    type: http
+    behavior: classical
+    format: mrs
+    interval: 86400
+
+  do: &do
+    type: http
+    behavior: domain
+    format: text
+    interval: 86400
+
+  dm: &dm
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+
+  ipm: &ipm
+    type: http
+    behavior: ipcidr
+    format: mrs
+    interval: 86400
+
+proxy-providers:
+  # 机场2：Ermaozi 公共订阅，官方 README 标注约每 12 小时更新。
+  机场2:
+    <<: *pr
+    url: "https://blog.ermao.net/sub/clash/ermao.net"
+    path: ./proxy_providers/机场2.yaml
+    interval: 43200
+    size-limit: 5242880
+    exclude-type: "direct|http|socks5"
+    override:
+      additional-prefix: "[机场2-公开免费]"
+      # 不继承未知订阅的 skip-cert-verify: true，恢复 TLS 证书校验。
+      skip-cert-verify: false
+
+  # 机场3：Zhuhai Free Nodes，官方 README 标注每小时更新。
+  机场3:
+    <<: *pr
+    url: "https://raw.githubusercontent.com/zhuhaiuk/free-nodes/main/clash_config.yaml"
+    path: ./proxy_providers/机场3.yaml
+    interval: 3600
+    size-limit: 5242880
+    exclude-type: "direct|http|socks5"
+    override:
+      additional-prefix: "[机场3-公开免费]"
+      # 不继承未知订阅的 skip-cert-verify: true，恢复 TLS 证书校验。
+      skip-cert-verify: false
+  机场5:
+    <<: *pr
+    url: "https://"
+    path: ./proxy_providers/机场5.yaml
+    override:
+      additional-prefix: "[机场5]"
+      udp: true
+      # udp-over-tcp 是 Shadowsocks 节点专用覆盖项；xudp 由下方按 VLESS/VMess 类型设置。
+      udp-over-tcp: true
+      tfo: true
+      mptcp: true
+      override-expr:
+        - '(select(.type == "vless" or .type == "vmess") | .packet-encoding) = "xudp"'
+        - '.smux = {"enabled": true, "protocol": "h2mux", "max-connections": 16, "only-tcp": true, "padding": true}'
+  机场6:
+    <<: *pr
+    url: "https://"
+    path: ./proxy_providers/机场6.yaml
+    override:
+      additional-prefix: "[机场6]"
+      udp: false
+      override-expr:
+        - '.smux = {"enabled": true, "protocol": "h2mux", "max-streams": 8, "only-tcp": true, "padding": false}'
+
+# --- 策略组 ---
+proxy-groups:
+  - name: 代理
+    type: select
+    proxies:
+      - 智能选择
+      - 机场5
+      - 机场6
+      - 负载均衡
+      - 自动选择
+      - 低倍率
+      - 直连
+      - 公开免费节点
+      - 机场2
+      - 机场3
+
+  # 主自动策略仅纳入自有/付费 Provider，避免公共免费节点被默认选中。
+  - name: 智能选择
+    type: fallback
+    use:
+      - 机场5
+      - 机场6
+    <<: *p
+    tolerance: 100
+
+  - name: 负载均衡
+    type: load-balance
+    use:
+      - 机场5
+      - 机场6
+    strategy: consistent-hashing
+    <<: *p
+    tolerance: 150
+
+  - name: 自动选择
+    type: url-test
+    use:
+      - 机场5
+      - 机场6
+    <<: *p
+    tolerance: 50
+
+  - name: 低倍率
+    type: select
+    use:
+      - 机场5
+      - 机场6
+    filter: "0.1|0.01|低倍|low"
+    <<: *p
+
+  # 公共免费节点单独成组，Provider 自身负责节点健康检查。
+  - name: 公开免费节点
+    type: fallback
+    use:
+      - 机场2
+      - 机场3
+
+  - name: 机场2
+    type: select
+    use:
+      - 机场2
+  - name: 机场3
+    type: select
+    use:
+      - 机场3
+  - name: 机场5
+    type: select
+    use:
+      - 机场5
+    <<: *p
+  - name: 机场6
+    type: select
+    use:
+      - 机场6
+    <<: *p
+
+  - name: 直连
+    type: select
+    udp: true
+    proxies:
+      - DIRECT
+
+  - name: Telegram
+    type: fallback
+    use:
+      - 机场5
+      - 机场6
+    filter: "新加坡|SG|Singapore|狮城"
+    <<: *p
+    tolerance: 100
+
+rule-providers:
+  NoBanDirect:
+    <<: *cl
+    path: ./rule_providers/NoBanDirect.yaml
+    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/refs/heads/main/NoBanDirect.yaml"
+
+  userReject:
+    <<: *cl
+    path: ./rule_providers/userReject.yaml
+    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/refs/heads/main/userReject.yaml"
+
+  userDirect:
+    <<: *cl
+    path: ./rule_providers/userDirect.yaml
+    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/refs/heads/main/userDirect.yaml"
+
+  userProxy:
+    <<: *cl
+    path: ./rule_providers/userProxy.yaml
+    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/refs/heads/main/userProxy.yaml"
+
+  Fakeip:
+    <<: *cl
+    path: ./rule_providers/Fakeip.yaml
+    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/refs/heads/main/Fakeip.yaml"
+
+  秋风广告规则:
+    <<: *do
+    format: mrs
+    path: ./rule_providers/AWAvenue-Ads-Rule-Clash-Only.Ads.mrs
+    url: "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/refs/heads/main/Filters/AWAvenue-Ads-Rule-Clash-Only.Ads.mrs"
+
+  pcdn:
+    <<: *cl
+    path: ./rule_providers/pcdn.yaml
+    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/refs/heads/main/pcdn.yaml"
+
+  dns-bypass:
+    <<: *cl
+    path: ./rule_providers/dns-bypass.yaml
+    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/refs/heads/main/DNS.yaml"
+
+  doh-geosite:
+    <<: *dm
+    path: ./rule_providers/category-doh.mrs
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-doh.mrs"
+
+  phishing-army:
+    type: http
+    behavior: domain
+    format: text
+    interval: 10800
+    path: ./rule_providers/phishing-army.txt
+    url: "https://phishing.army/download/phishing-army-domains.txt"
+
+  privacy-telemetry:
+    <<: *dm
+    path: ./rule_providers/category-telemetry.mrs
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-telemetry.mrs"
+
+  privacy-tracker:
+    <<: *dm
+    path: ./rule_providers/tracker.mrs
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tracker.mrs"
+
+  YouTube:
+    <<: *cl
+    format: yaml
+    path: ./rule_providers/YouTube.yaml
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/YouTube/YouTube.yaml"
+
+  Advertising:
+    <<: *cl
+    path: ./rule_providers/Advertising.list
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Advertising/Advertising.list"
+
+  tvbox:
+    <<: *do
+    format: yaml
+    path: ./rule_providers/tvbox.yaml
+    url: "https://raw.githubusercontent.com/Sfssup/MihomoConfigFile/refs/heads/main/rule_set/direct.yaml"
+
+  microsoft_cdn:
+    <<: *cl
+    path: ./rule_providers/microsoft_cdn.txt
+    url: "https://ruleset.skk.moe/Clash/non_ip/microsoft_cdn.txt"
+
+  china-ASN:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    path: ./rule_providers/ASN.China.list
+    url: "https://raw.githubusercontent.com/High-cla/ASN-China-clash/refs/heads/main/ASN.China.list"
+
+  GameDownload:
+    <<: *cl
+    path: ./rule_providers/GameDownloadCN.list
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Game/GameDownloadCN/GameDownloadCN.list"
+
+  GoogleFCM:
+    <<: *dm
+    path: ./rule_providers/googlefcm.mrs
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/googlefcm.mrs"
+
+  steam-cn:
+    <<: *dm
+    path: ./rule_providers/steam-cn.mrs
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam@cn.mrs"
+
+  google-cn:
+    <<: *dm
+    path: ./rule_providers/google-cn.mrs
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google@cn.mrs"
+
+  games-cn:
+    <<: *dm
+    path: ./rule_providers/games-cn.mrs
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games@cn.mrs"
+
+  gfw:
+    <<: *dm
+    path: ./rule_providers/gfw.mrs
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/gfw.mrs"
+
+  cn:
+    <<: *dm
+    path: ./rule_providers/cn.mrs
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"
+
+  private:
+    <<: *dm
+    path: ./rule_providers/private.mrs
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"
+
+  hk-ip:
+    <<: *ipm
+    path: ./rule_providers/hk-ip.mrs
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/hk.mrs"
+
+  private-ip:
+    <<: *ipm
+    path: ./rule_providers/private-ip.mrs
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"
+
+  porn:
+    <<: *dm
+    path: ./rule_providers/porn.mrs
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-porn.mrs"
+
+  microsoft@cn:
+    <<: *dm
+    path: ./rule_providers/microsoft-cn.mrs
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft@cn.mrs"
+
+  cloudflare@cn:
+    <<: *dm
+    path: ./rule_providers/cloudflare-cn.mrs
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cloudflare@cn.mrs"
+
+  cloudflare:
+    type: inline
+    behavior: classical
+    payload:
+      - DOMAIN,challenges.cloudflare.com
+      - DOMAIN-SUFFIX,cloudflarechallenge.com
+
+rules:
+  # Keep local / private destinations out of proxy and reject policies.
+  - RULE-SET,private,DIRECT
+  - RULE-SET,private-ip,DIRECT,no-resolve
+  - RULE-SET,NoBanDirect,DIRECT
+
+  # DoT upstream exceptions must precede DNS REJECT rules.
+  - DOMAIN,security.cloudflare-dns.com,代理
+  - DOMAIN,159277.alidns.com,DIRECT
+  - RULE-SET,doh-geosite,REJECT
+  - RULE-SET,dns-bypass,REJECT
+
+  # Threat-intel and privacy categories.
+  - RULE-SET,phishing-army,REJECT
+  - RULE-SET,privacy-telemetry,REJECT
+  - RULE-SET,privacy-tracker,REJECT
+
+  # Custom policy sets.
+  - RULE-SET,userReject,REJECT,no-resolve
+  - RULE-SET,userProxy,代理
+  - RULE-SET,userDirect,DIRECT
+
+  # YouTube is proxied after explicit userDirect exceptions.
+  - RULE-SET,YouTube,代理
+
+  # Ads-only upstream variant; PCDN and telemetry are maintained separately.
+  - RULE-SET,秋风广告规则,REJECT,no-resolve
+  - RULE-SET,pcdn,REJECT,no-resolve
+  - RULE-SET,Advertising,REJECT,no-resolve
+  - RULE-SET,cloudflare,代理
+  - RULE-SET,gfw,代理
+  - RULE-SET,porn,代理
+  - RULE-SET,microsoft_cdn,DIRECT
+  - RULE-SET,microsoft@cn,DIRECT
+  - RULE-SET,cloudflare@cn,DIRECT
+  - RULE-SET,GameDownload,DIRECT
+  - RULE-SET,tvbox,DIRECT
+  # Steam CDN 直连不可达：解析到中国移动定向 CDN（39.136/60.9 段），必须走代理
+  - DOMAIN-SUFFIX,eccdnx.com,代理
+  - DOMAIN-SUFFIX,steamcontent.com,代理
+  - DOMAIN-SUFFIX,clngaa.com,代理
+  - RULE-SET,china-ASN,DIRECT
+  - RULE-SET,GoogleFCM,DIRECT
+  - RULE-SET,steam-cn,DIRECT
+  - RULE-SET,google-cn,DIRECT
+  - RULE-SET,games-cn,DIRECT
+  - RULE-SET,cn,DIRECT
+  - RULE-SET,hk-ip,DIRECT,no-resolve
+  - MATCH,代理
