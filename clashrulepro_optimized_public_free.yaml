@@ -191,9 +191,9 @@ proxy-providers:
       udp-over-tcp: true
       tfo: true
       mptcp: true
-#      override-expr:
+      override-expr:
 #        - '(select(.type == "vless" or .type == "vmess") | .packet-encoding) = "xudp"'
-#        - '.smux = {"enabled": true, "protocol": "h2mux", "max-connections": 16, "only-tcp": true, "padding": true}'
+        - '.smux = {"enabled": true, "protocol": "h2mux", "max-connections": 16, "only-tcp": true, "padding": true}'
 
   # 机场3：Zhuhai Free Nodes，官方 README 标注每小时更新。
   机场3:
@@ -211,9 +211,9 @@ proxy-providers:
       tfo: true
       mptcp: true
       override-expr:
-#      override-expr:
+      override-expr:
 #        - '(select(.type == "vless" or .type == "vmess") | .packet-encoding) = "xudp"'
-#        - '.smux = {"enabled": true, "protocol": "h2mux", "max-connections": 16, "only-tcp": true, "padding": true}'
+        - '.smux = {"enabled": true, "protocol": "h2mux", "max-connections": 16, "only-tcp": true, "padding": true}'
   机场5:
     <<: *pr
     url: "https"
@@ -224,9 +224,9 @@ proxy-providers:
       udp-over-tcp: true
       tfo: true
       mptcp: true
-#      override-expr:
+      override-expr:
 #        - '(select(.type == "vless" or .type == "vmess") | .packet-encoding) = "xudp"'
-#        - '.smux = {"enabled": true, "protocol": "h2mux", "max-connections": 16, "only-tcp": true, "padding": true}'
+        - '.smux = {"enabled": true, "protocol": "h2mux", "max-connections": 16, "only-tcp": true, "padding": true}'
   机场6:
     <<: *pr
     url: "https"
@@ -238,9 +238,9 @@ proxy-providers:
       tfo: true
       mptcp: true
       override-expr:
-#      override-expr:
+      override-expr:
 #        - '(select(.type == "vless" or .type == "vmess") | .packet-encoding) = "xudp"'
-#        - '.smux = {"enabled": true, "protocol": "h2mux", "max-connections": 16, "only-tcp": true, "padding": true}'
+        - '.smux = {"enabled": true, "protocol": "h2mux", "max-connections": 16, "only-tcp": true, "padding": true}'
 
 # --- 策略组 ---
 proxy-groups:
