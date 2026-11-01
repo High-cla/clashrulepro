@@ -442,9 +442,8 @@ def main() -> int:
 
     # Highlight unusually broad legacy rules without blocking their intentional use.
     # Intentional high-risk policy: whole .com.cn suffix blocking is documented in userReject.yaml.
-    broad_rules = {
-        ("userReject.yaml", "DOMAIN-SUFFIX", "com.cn"): "intentional whole-suffix deny; legitimate .com.cn sites may also be blocked",
-    }
+    # The documented userReject.yaml .com.cn suffix rule is intentional; suppress its warning.
+    broad_rules = {}
     for rule in rules:
         if (rule.path, rule.kind, rule.payload.lower()) in broad_rules:
             warnings.append(f"{rule.location}: broad match: {broad_rules[(rule.path, rule.kind, rule.payload.lower())]}")

@@ -19,7 +19,7 @@ permissions:
 jobs:
   validate:
     name: Rule syntax and conflict checks
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - name: Checkout
         uses: actions/checkout@v7.0.1
