@@ -62,18 +62,18 @@ def split_classical(text: str, *, allow_ports: bool = False) -> tuple[list[str],
                 try:
                     address = ipaddress.ip_address(value)
                 except ValueError:
-                    domains.append(rule)
+                    domains.append(value)
                 else:
-                    ip_kind = "IP-CIDR" if address.version == 4 else "IP-CIDR6"
                     prefix = 32 if address.version == 4 else 128
-                    ips.append(f"{ip_kind},{address}/{prefix}")
+                    ips.append(f"{address}/{prefix}")
             else:
-                domains.append(rule)
+                # DOMAIN-SUFFIX matches both the apex and all subdomains in Mihomo.
+                domains.append(f"+.{value}")
         elif kind in KEYWORD_TYPES:
             keywords.append(rule)
         elif kind in IP_TYPES:
-            ipaddress.ip_network(value, strict=False)
-            ips.append(rule)
+            network = ipaddress.ip_network(value, strict=False)
+            ips.append(network.with_prefixlen)
         elif kind in PORT_TYPES and allow_ports:
             ports.append(rule)
         else:
