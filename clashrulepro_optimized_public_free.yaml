@@ -387,11 +387,6 @@ rule-providers:
     path: ./rule_providers/DNS-Domain.mrs
     url: "https://raw.githubusercontent.com/High-cla/clashrulepro/main/rule_providers/DNS-Domain.mrs"
 
-  DNS-Port:
-    <<: *cl
-    path: ./rule_providers/DNS-Port.txt
-    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/main/rule_providers/DNS-Port.txt"
-
   doh-geosite:
     <<: *dm
     path: ./rule_providers/category-doh.mrs
@@ -533,7 +528,6 @@ rules:
   - DOMAIN,security.cloudflare-dns.com,代理
   - RULE-SET,doh-geosite,REJECT,no-resolve
   - RULE-SET,DNS-Domain,REJECT,no-resolve
-  - RULE-SET,DNS-Port,REJECT,no-resolve
   - RULE-SET,phishing-army,REJECT,no-resolve
   - RULE-SET,privacy-telemetry,REJECT,no-resolve
   - RULE-SET,privacy-tracker,REJECT,no-resolve
