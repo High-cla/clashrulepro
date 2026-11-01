@@ -160,8 +160,17 @@ def parse_rule(path: str, line_no: int, raw: str) -> Rule | None:
         return None
     # Allow trailing comments only when introduced by whitespace.
     line = re.split(r"\s+#", line, maxsplit=1)[0].strip()
-    parts = [part.strip() for part in line.split(",")]
-    kind = parts[0].upper()
+    raw_kind, separator, raw_payload = line.partition(",")
+    if not separator:
+        raise ValueError("rule must contain a comma after its type")
+    kind = raw_kind.strip().upper()
+    # A regex can itself contain commas, e.g. the {2,} repetition quantifier.
+    # Preserve everything after the first delimiter as the complete expression.
+    if kind == "DOMAIN-REGEX":
+        parts = [kind, raw_payload.strip()]
+    else:
+        parts = [part.strip() for part in line.split(",")]
+        parts[0] = kind
     if kind not in FIELD_COUNTS:
         raise ValueError(f"unsupported or invalid rule type {kind!r}")
     min_fields, max_fields = FIELD_COUNTS[kind]
