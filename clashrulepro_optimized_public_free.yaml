@@ -125,7 +125,8 @@ dns:
     - +.lan
     - +.local
     - rule-set:private
-    - rule-set:Fakeip
+    - rule-set:Fakeip-Domain
+    - rule-set:Fakeip-Keyword
 
 # --- YAML 锚点模板 ---
 # providers-anchor 仅承载 YAML 锚点；Mihomo 配置解析会忽略这个辅助键。
@@ -155,12 +156,6 @@ providers-anchor:
     type: http
     behavior: classical
     format: text
-    interval: 86400
-
-  cm: &cm
-    type: http
-    behavior: classical
-    format: mrs
     interval: 86400
 
   do: &do
@@ -343,10 +338,15 @@ rule-providers:
     path: ./rule_providers/userProxy.yaml
     url: "https://raw.githubusercontent.com/High-cla/clashrulepro/refs/heads/main/userProxy.yaml"
 
-  Fakeip:
+  Fakeip-Domain:
+    <<: *dm
+    path: ./rule_providers/Fakeip-Domain.mrs
+    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/main/rule_providers/Fakeip-Domain.mrs"
+
+  Fakeip-Keyword:
     <<: *cl
-    path: ./rule_providers/Fakeip.yaml
-    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/refs/heads/main/Fakeip.yaml"
+    path: ./rule_providers/Fakeip-Keyword.txt
+    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/main/rule_providers/Fakeip-Keyword.txt"
 
   秋风广告规则:
     <<: *do
@@ -354,15 +354,30 @@ rule-providers:
     path: ./rule_providers/AWAvenue-Ads-Rule-Clash-Only.Ads.mrs
     url: "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/refs/heads/main/Filters/AWAvenue-Ads-Rule-Clash-Only.Ads.mrs"
 
-  pcdn:
-    <<: *cl
-    path: ./rule_providers/pcdn.yaml
-    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/refs/heads/main/pcdn.yaml"
+  pcdn-domain:
+    <<: *dm
+    path: ./rule_providers/pcdn-domain.mrs
+    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/main/rule_providers/pcdn-domain.mrs"
 
-  dns-bypass:
+  pcdn-ip:
+    <<: *ipm
+    path: ./rule_providers/pcdn-ip.mrs
+    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/main/rule_providers/pcdn-ip.mrs"
+
+  pcdn-keyword:
     <<: *cl
-    path: ./rule_providers/dns-bypass.yaml
-    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/refs/heads/main/DNS.yaml"
+    path: ./rule_providers/pcdn-keyword.txt
+    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/main/rule_providers/pcdn-keyword.txt"
+
+  DNS-Domain:
+    <<: *dm
+    path: ./rule_providers/DNS-Domain.mrs
+    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/main/rule_providers/DNS-Domain.mrs"
+
+  DNS-Port:
+    <<: *cl
+    path: ./rule_providers/DNS-Port.txt
+    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/main/rule_providers/DNS-Port.txt"
 
   doh-geosite:
     <<: *dm
@@ -387,16 +402,25 @@ rule-providers:
     path: ./rule_providers/tracker.mrs
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tracker.mrs"
 
-  Advertising:
+  Advertising-Domain:
+    <<: *dm
+    path: ./rule_providers/Advertising-Domain.mrs
+    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/main/rule_providers/Advertising-Domain.mrs"
+
+  Advertising-IP:
+    <<: *ipm
+    path: ./rule_providers/Advertising-IP.mrs
+    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/main/rule_providers/Advertising-IP.mrs"
+
+  Advertising-Keyword:
     <<: *cl
-    path: ./rule_providers/Advertising.list
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Advertising/Advertising.list"
+    path: ./rule_providers/Advertising-Keyword.txt
+    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/main/rule_providers/Advertising-Keyword.txt"
 
   tvbox:
-    <<: *do
-    format: yaml
-    path: ./rule_providers/tvbox.yaml
-    url: "https://raw.githubusercontent.com/Sfssup/MihomoConfigFile/refs/heads/main/rule_set/direct.yaml"
+    <<: *dm
+    path: ./rule_providers/tvbox.mrs
+    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/main/rule_providers/tvbox.mrs"
 
   microsoft_cdn:
     <<: *cl
@@ -412,9 +436,9 @@ rule-providers:
     url: "https://raw.githubusercontent.com/High-cla/ASN-China-clash/refs/heads/main/ASN.China.list"
 
   GameDownload:
-    <<: *cl
-    path: ./rule_providers/GameDownloadCN.list
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Game/GameDownloadCN/GameDownloadCN.list"
+    <<: *dm
+    path: ./rule_providers/GameDownloadCN.mrs
+    url: "https://raw.githubusercontent.com/High-cla/clashrulepro/main/rule_providers/GameDownloadCN.mrs"
 
   GoogleFCM:
     <<: *dm
@@ -491,13 +515,18 @@ rules:
   - RULE-SET,userProxy,代理
   - DOMAIN,security.cloudflare-dns.com,代理
   - RULE-SET,doh-geosite,REJECT,no-resolve
-  - RULE-SET,dns-bypass,REJECT,no-resolve
+  - RULE-SET,DNS-Domain,REJECT
+  - RULE-SET,DNS-Port,REJECT
   - RULE-SET,phishing-army,REJECT,no-resolve
   - RULE-SET,privacy-telemetry,REJECT,no-resolve
   - RULE-SET,privacy-tracker,REJECT,no-resolve
   - RULE-SET,秋风广告规则,REJECT,no-resolve
-  - RULE-SET,pcdn,REJECT,no-resolve
-  - RULE-SET,Advertising,REJECT,no-resolve
+  - RULE-SET,pcdn-domain,REJECT
+  - RULE-SET,pcdn-ip,REJECT,no-resolve
+  - RULE-SET,pcdn-keyword,REJECT
+  - RULE-SET,Advertising-Domain,REJECT
+  - RULE-SET,Advertising-IP,REJECT,no-resolve
+  - RULE-SET,Advertising-Keyword,REJECT
   - RULE-SET,private-ip,DIRECT,no-resolve
   - RULE-SET,hk-ip,DIRECT,no-resolve
   - RULE-SET,private,DIRECT

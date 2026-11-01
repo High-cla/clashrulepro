@@ -290,10 +290,61 @@ def domain_rules_overlap(left: Rule, right: Rule) -> bool:
     return False
 
 
+
+def validate_provider_config(errors: list[str]) -> None:
+    config_path = ROOT / "clashrulepro_optimized_public_free.yaml"
+    try:
+        config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
+        providers = config["rule-providers"]
+        anchors = config.get("providers-anchor", {})
+    except (OSError, UnicodeDecodeError, yaml.YAMLError, KeyError, TypeError) as exc:
+        errors.append(f"clashrulepro_optimized_public_free.yaml: invalid provider config: {exc}")
+        return
+
+    expected = {
+        "Advertising-Domain": ("domain", "mrs"),
+        "Advertising-IP": ("ipcidr", "mrs"),
+        "Advertising-Keyword": ("classical", "text"),
+        "pcdn-domain": ("domain", "mrs"),
+        "pcdn-ip": ("ipcidr", "mrs"),
+        "pcdn-keyword": ("classical", "text"),
+        "DNS-Domain": ("domain", "mrs"),
+        "DNS-Port": ("classical", "text"),
+        "Fakeip-Domain": ("domain", "mrs"),
+        "Fakeip-Keyword": ("classical", "text"),
+        "tvbox": ("domain", "mrs"),
+        "GameDownload": ("domain", "mrs"),
+    }
+    for name, (behavior, file_format) in expected.items():
+        provider = providers.get(name)
+        if not isinstance(provider, dict):
+            errors.append(f"clashrulepro_optimized_public_free.yaml: missing provider {name}")
+            continue
+        if provider.get("behavior") != behavior or provider.get("format") != file_format:
+            errors.append(
+                f"clashrulepro_optimized_public_free.yaml: {name} must use "
+                f"behavior={behavior}, format={file_format}"
+            )
+
+    for section_name, section in (("providers-anchor", anchors), ("rule-providers", providers)):
+        if not isinstance(section, dict):
+            continue
+        for name, provider in section.items():
+            if isinstance(provider, dict) and provider.get("behavior") == "classical" and provider.get("format") == "mrs":
+                errors.append(
+                    f"clashrulepro_optimized_public_free.yaml: invalid classical/MRS definition {section_name}.{name}"
+                )
+
+    fakeip_filter = config.get("dns", {}).get("fake-ip-filter", [])
+    for required in ("rule-set:Fakeip-Domain", "rule-set:Fakeip-Keyword"):
+        if required not in fakeip_filter:
+            errors.append(f"clashrulepro_optimized_public_free.yaml: fake-ip-filter missing {required}")
+
 def main() -> int:
     errors: list[str] = []
     warnings: list[str] = []
     rules: list[Rule] = []
+    validate_provider_config(errors)
 
     for relative in RULE_FILES:
         path = ROOT / relative

@@ -4,13 +4,13 @@ on:
   push:
     paths:
       - "*.yaml"
-      - "scripts/validate_rules.py"
-      - ".github/workflows/validate-rules.yml"
+      - "scripts/*.py"
+      - ".github/workflows/*.yml"
   pull_request:
     paths:
       - "*.yaml"
-      - "scripts/validate_rules.py"
-      - ".github/workflows/validate-rules.yml"
+      - "scripts/*.py"
+      - ".github/workflows/*.yml"
   workflow_dispatch:
 
 permissions:

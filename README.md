@@ -6,14 +6,22 @@
 
 | 文件 | 用途 | 建议策略 / 用法 |
 |---|---|---|
-| `DNS.yaml` | 常见公共 DoH/DoT/DoQ 域名与端口 | classical provider，REJECT |
+| `DNS.yaml` | DoH/DoT/DoQ 域名与端口源规则；域名生成 MRS，端口保留 text | DNS-Domain / DNS-Port，REJECT |
 | `Malware-Provider.yaml` | Phishing Army 动态钓鱼域名订阅配置片段 | domain provider，REJECT |
 | `Privacy.yaml` | GeoSite telemetry / tracker 规则片段 | 直接加入 rules；或使用下文 MetaCubeX MRS |
 | `Private.yaml` | 局域网域名、RFC1918、回环、链路本地、IPv6 ULA | classical provider，DIRECT |
-| `pcdn.yaml` | PCDN / MCDN 相关规则 | classical provider，REJECT |
+| `pcdn.yaml` | PCDN / MCDN 域名、IP 与关键词源规则，构建时拆分 | pcdn-domain / pcdn-ip / pcdn-keyword，REJECT |
 | `userDirect.yaml` | 自定义直连规则 | DIRECT |
 | `userProxy.yaml` | 自定义代理规则 | PROXY |
 | `userReject.yaml` | 自定义安全、隐私和广告拦截规则 | REJECT |
+
+## MRS Provider 拆分与构建
+
+广告规则从 Blackmatrix7 的同一份 `Advertising.list` 拆分为三个 Provider：`Advertising-Domain`（domain/MRS）、`Advertising-IP`（ipcidr/MRS）和 `Advertising-Keyword`（classical/text）。PCDN、DNS、Fake-IP 也按规则类型拆分；DNS 端口规则和域名关键词保留 text，不强行塞入 MRS。
+
+`tvbox` 从 Sfssup 的 domain YAML 转为 domain MRS；`GameDownloadCN` 从 Blackmatrix7 的 domain 规则转为 domain MRS。生成文件位于 `rule_providers/`，由 `.github/workflows/build-mrs.yml` 调用官方 Mihomo `convert-ruleset` 命令构建，并自动提交生成结果。TVBox 源中不符合域名语法或无法由 domain MRS 表达的通配条目会在构建时跳过并写入 Actions 日志。
+
+Mihomo 的 MRS 仅支持 `domain` 和 `ipcidr` 行为；`classical` 必须使用 text/yaml，不能定义为 MRS。相关格式以 [Mihomo Rule Providers 文档](https://wiki.metacubex.one/en/config/rule-providers/) 为准。
 
 ## 上游规则整合策略
 
