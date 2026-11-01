@@ -528,6 +528,7 @@ rules:
   - RULE-SET,NoBanDirect,DIRECT
   - RULE-SET,userDirect,DIRECT
   - DOMAIN,159277.alidns.com,DIRECT
+  - IP-CIDR,223.4.0.0/14,DIRECT,no-resolve
   - RULE-SET,userProxy,代理
   - DOMAIN,security.cloudflare-dns.com,代理
   - RULE-SET,doh-geosite,REJECT,no-resolve
