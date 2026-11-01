@@ -110,6 +110,7 @@ dns:
     - 119.29.29.29
   nameserver-policy:
     "+.arpa": '10.0.0.1'
+    "rule-set:private": '10.0.0.1'
     "rule-set:NoBanDirect":
       - tls://security.cloudflare-dns.com#代理&ecs=103.151.172.0/24
   nameserver:
