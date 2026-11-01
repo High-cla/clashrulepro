@@ -123,9 +123,9 @@ dns:
     - '*.lan'
     - +.lan
     - +.local
-    - rule-set:private
-    - rule-set:Fakeip-Domain
-    - rule-set:Fakeip-Keyword
+    - rule-set:private,no-resolve
+    - rule-set:Fakeip-Domain,no-resolve
+    - rule-set:Fakeip-Keyword,no-resolve
 
 # --- YAML 锚点模板 ---
 providers-anchor:
