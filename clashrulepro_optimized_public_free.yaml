@@ -521,6 +521,7 @@ rule-providers:
       - DOMAIN-SUFFIX,cloudflarechallenge.com
 
 rules:
+  - AND,((DOMAIN-REGEX,^[a-z0-9-]*(upload|log|uspider)[a-z0-9-]*\.(mihoyo|hoyoverse|yuanshen|juequling)\.com$),(NOT,((DOMAIN-KEYWORD,login)))),REJECT,no-resolve
   - RULE-SET,userReject,REJECT,no-resolve
   - RULE-SET,private-ip,DIRECT,no-resolve
   - RULE-SET,private,DIRECT
