@@ -211,7 +211,6 @@ proxy-providers:
       tfo: true
       mptcp: true
       override-expr:
-      override-expr:
 #        - '(select(.type == "vless" or .type == "vmess") | .packet-encoding) = "xudp"'
         - '.smux = {"enabled": true, "protocol": "h2mux", "max-connections": 16, "only-tcp": true, "padding": true}'
   机场5:
@@ -237,7 +236,6 @@ proxy-providers:
       udp-over-tcp: true
       tfo: true
       mptcp: true
-      override-expr:
       override-expr:
 #        - '(select(.type == "vless" or .type == "vmess") | .packet-encoding) = "xudp"'
         - '.smux = {"enabled": true, "protocol": "h2mux", "max-connections": 16, "only-tcp": true, "padding": true}'
