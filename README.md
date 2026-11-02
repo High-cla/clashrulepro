@@ -37,7 +37,7 @@ Mihomo 的 MRS 仅支持 `domain` 和 `ipcidr` 行为；`classical` 必须使用
 
 ## DNS 防绕过说明
 
-`DNS.yaml` 覆盖常见公共加密 DNS 域名及端口 853（DoT）、784 / 8853（DoQ）。它与 MetaCubeX `category-doh.mrs` 联合使用，补足域名分类覆盖。
+`DNS.yaml` 仅维护常见公共加密 DNS 域名规则，生成 `DNS-Domain.mrs`；当前不生成独立 `DNS-Port` provider，也不通过 `DNS.yaml` 覆盖 853（DoT）、784 / 8853（DoQ）端口。它与 MetaCubeX `category-doh.mrs` 联合使用，补足域名分类覆盖。
 
 上传的 Mihomo 配置使用两个 DoT 上游：
 - `security.cloudflare-dns.com`：通过代理连接。
