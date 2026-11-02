@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
-"""Validate the repository's line-based Mihomo rule sets (stdlib + PyYAML)."""
+"""Validate line-based Mihomo rule sets using Python, PyYAML, and Go RE2."""
 
 from __future__ import annotations
 
 import ipaddress
+import os
 import re
+import shutil
+import subprocess
 import sys
+import tempfile
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
@@ -140,21 +144,57 @@ def validate_port(payload: str) -> None:
             raise ValueError("port must be between 1 and 65535 with start <= end")
 
 
-def validate_regex(pattern: str) -> None:
-    # Mihomo uses Go regexp (RE2); Python's lookaround/backreferences are not portable.
-    if re.search(r"\(\?(?:[=!]|<[=!])", pattern):
-        raise ValueError("lookahead/lookbehind is not supported by Go RE2")
-    if re.search(r"\\[1-9]", pattern) or r"\k<" in pattern or "(?P=" in pattern:
-        raise ValueError("backreferences are not supported by Go RE2")
-    if "(?|" in pattern:
-        raise ValueError("branch-reset groups are not supported by Go RE2")
+class GoRegexValidator:
+    """Build once, then validate every pattern with Go's regexp (RE2) engine."""
+
+    def __init__(self) -> None:
+        go = shutil.which("go")
+        if go is None:
+            raise RuntimeError("Go toolchain not found; install Go to validate DOMAIN-REGEX rules")
+
+        self._temporary_directory = tempfile.TemporaryDirectory(prefix="clashrulepro-re2-")
+        binary_name = "validate_regex.exe" if os.name == "nt" else "validate_regex"
+        self._binary = Path(self._temporary_directory.name) / binary_name
+        helper = ROOT / "scripts" / "validate_regex.go"
+        try:
+            result = subprocess.run(
+                [go, "build", "-trimpath", "-o", str(self._binary), str(helper)],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+        except OSError as exc:
+            self.close()
+            raise RuntimeError(f"failed to execute Go toolchain: {exc}") from exc
+        if result.returncode != 0:
+            output = "\n".join(part for part in (result.stdout, result.stderr) if part).strip()
+            self.close()
+            raise RuntimeError(f"failed to build Go RE2 validator:\n{output}")
+
+    def validate(self, pattern: str) -> None:
+        result = subprocess.run(
+            [str(self._binary), pattern],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if result.returncode != 0:
+            message = result.stderr.strip() or "Go regexp rejected the pattern"
+            raise ValueError(message)
+
+    def close(self) -> None:
+        self._temporary_directory.cleanup()
+
+
+def validate_regex(pattern: str, regex_validator: GoRegexValidator) -> None:
     try:
-        re.compile(pattern)
-    except re.error as exc:
-        raise ValueError(f"invalid regular expression: {exc}") from exc
+        regex_validator.validate(pattern)
+    except ValueError as exc:
+        raise ValueError(f"invalid Go RE2 regular expression: {exc}") from exc
 
 
-def parse_rule(path: str, line_no: int, raw: str) -> Rule | None:
+def parse_rule(path: str, line_no: int, raw: str, regex_validator: GoRegexValidator) -> Rule | None:
     line = raw.strip()
     if not line or line.startswith("#"):
         return None
@@ -200,7 +240,7 @@ def parse_rule(path: str, line_no: int, raw: str) -> Rule | None:
         if any(ch.isspace() for ch in payload) or any(ch in payload for ch in ",*?"):
             raise ValueError("DOMAIN-KEYWORD must be a literal non-empty keyword")
     elif kind == "DOMAIN-REGEX":
-        validate_regex(payload)
+        validate_regex(payload, regex_validator)
     elif kind == "DOMAIN-WILDCARD":
         if any(ch not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-*?" for ch in payload):
             raise ValueError("DOMAIN-WILDCARD contains unsupported characters")
@@ -309,7 +349,6 @@ def validate_provider_config(errors: list[str]) -> None:
         "pcdn-ip": ("ipcidr", "mrs"),
         "pcdn-keyword": ("classical", "text"),
         "DNS-Domain": ("domain", "mrs"),
-        "DNS-Port": ("classical", "text"),
         "Fakeip-Domain": ("domain", "mrs"),
         "Fakeip-Keyword": ("classical", "text"),
         "tvbox": ("domain", "mrs"),
@@ -340,7 +379,7 @@ def validate_provider_config(errors: list[str]) -> None:
         if required not in fakeip_filter:
             errors.append(f"clashrulepro_optimized_public_free.yaml: fake-ip-filter missing {required}")
 
-def main() -> int:
+def validate_repository(regex_validator: GoRegexValidator) -> int:
     errors: list[str] = []
     warnings: list[str] = []
     rules: list[Rule] = []
@@ -358,7 +397,7 @@ def main() -> int:
             continue
         for line_no, raw in enumerate(content.splitlines(), 1):
             try:
-                rule = parse_rule(relative, line_no, raw)
+                rule = parse_rule(relative, line_no, raw, regex_validator)
             except ValueError as exc:
                 errors.append(f"{relative}:{line_no}: {exc}: {raw.strip()}")
                 continue
@@ -461,6 +500,18 @@ def main() -> int:
 
     print(f"Validation passed: {len(RULE_FILES)} rule files, {len(rules)} rules, {len(warnings)} warning(s).")
     return 0
+
+
+def main() -> int:
+    try:
+        regex_validator = GoRegexValidator()
+    except RuntimeError as exc:
+        print(f"::error::{exc}")
+        return 1
+    try:
+        return validate_repository(regex_validator)
+    finally:
+        regex_validator.close()
 
 
 if __name__ == "__main__":
