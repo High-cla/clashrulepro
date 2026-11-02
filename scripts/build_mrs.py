@@ -25,7 +25,6 @@ SOURCES = {
 DOMAIN_TYPES = {"DOMAIN", "DOMAIN-SUFFIX"}
 KEYWORD_TYPES = {"DOMAIN-KEYWORD"}
 IP_TYPES = {"IP-CIDR", "IP-CIDR6"}
-PORT_TYPES = {"DST-PORT", "SRC-PORT", "IN-PORT"}
 
 
 def download_text(url: str) -> str:
@@ -49,8 +48,8 @@ def parse_line(raw: str) -> tuple[str, str] | None:
     return parts[0].upper(), parts[1]
 
 
-def split_classical(text: str, *, allow_ports: bool = False) -> tuple[list[str], list[str], list[str], list[str]]:
-    domains, ips, keywords, ports = [], [], [], []
+def split_classical(text: str) -> tuple[list[str], list[str], list[str]]:
+    domains, ips, keywords = [], [], []
     for line_no, raw in enumerate(text.splitlines(), 1):
         parsed = parse_line(raw)
         if parsed is None:
@@ -74,11 +73,9 @@ def split_classical(text: str, *, allow_ports: bool = False) -> tuple[list[str],
         elif kind in IP_TYPES:
             network = ipaddress.ip_network(value, strict=False)
             ips.append(network.with_prefixlen)
-        elif kind in PORT_TYPES and allow_ports:
-            ports.append(rule)
         else:
             raise ValueError(f"unsupported rule at line {line_no}: {raw.strip()}")
-    return unique(domains), unique(ips), unique(keywords), unique(ports)
+    return unique(domains), unique(ips), unique(keywords)
 
 
 def valid_domain_expression(value: str) -> bool:
@@ -131,7 +128,7 @@ def build(mihomo: Path) -> None:
     OUT.mkdir(parents=True, exist_ok=True)
 
     # Advertising: all outputs come from one Blackmatrix7 source feed.
-    ads_domains, ads_ips, ads_keywords, _ = split_classical(download_text(SOURCES["advertising"]))
+    ads_domains, ads_ips, ads_keywords = split_classical(download_text(SOURCES["advertising"]))
     convert(mihomo, "domain", "text", "\n".join(ads_domains) + "\n", OUT / "Advertising-Domain.mrs")
     convert(mihomo, "ipcidr", "text", "\n".join(ads_ips) + "\n", OUT / "Advertising-IP.mrs")
     write_text("Advertising-Keyword.txt", ads_keywords)
@@ -153,26 +150,23 @@ def build(mihomo: Path) -> None:
     convert(mihomo, "domain", "yaml", tvbox_yaml, OUT / "tvbox.mrs")
 
     # PCDN: separate domain, IP, and keyword rules.
-    pcdn_domains, pcdn_ips, pcdn_keywords, _ = split_classical((ROOT / "pcdn.yaml").read_text(encoding="utf-8"))
+    pcdn_domains, pcdn_ips, pcdn_keywords = split_classical((ROOT / "pcdn.yaml").read_text(encoding="utf-8"))
     convert(mihomo, "domain", "text", "\n".join(pcdn_domains) + "\n", OUT / "pcdn-domain.mrs")
     convert(mihomo, "ipcidr", "text", "\n".join(pcdn_ips) + "\n", OUT / "pcdn-ip.mrs")
     write_text("pcdn-keyword.txt", pcdn_keywords)
 
-    # DNS: domains to MRS; destination ports stay as classical text.
-    dns_domains, _, _, dns_ports = split_classical(
-        (ROOT / "DNS.yaml").read_text(encoding="utf-8"), allow_ports=True
-    )
+    # DNS: domain rules only; no separate DNS-Port provider is generated.
+    dns_domains, _, _ = split_classical((ROOT / "DNS.yaml").read_text(encoding="utf-8"))
     convert(mihomo, "domain", "text", "\n".join(dns_domains) + "\n", OUT / "DNS-Domain.mrs")
-    write_text("DNS-Port.txt", dns_ports)
 
     # Fake-IP exclusions: domain and keyword providers remain independent.
-    fakeip_domains, _, fakeip_keywords, _ = split_classical((ROOT / "Fakeip.yaml").read_text(encoding="utf-8"))
+    fakeip_domains, _, fakeip_keywords = split_classical((ROOT / "Fakeip.yaml").read_text(encoding="utf-8"))
     convert(mihomo, "domain", "text", "\n".join(fakeip_domains) + "\n", OUT / "Fakeip-Domain.mrs")
     write_text("Fakeip-Keyword.txt", fakeip_keywords)
 
     # GameDownloadCN source has only DOMAIN / DOMAIN-SUFFIX rules.
-    game_domains, _, game_keywords, game_ports = split_classical(download_text(SOURCES["game_download"]))
-    if game_keywords or game_ports:
+    game_domains, _, game_keywords = split_classical(download_text(SOURCES["game_download"]))
+    if game_keywords:
         raise ValueError("GameDownloadCN source unexpectedly contains non-domain rule classes")
     convert(mihomo, "domain", "text", "\n".join(game_domains) + "\n", OUT / "GameDownloadCN.mrs")
 
@@ -181,7 +175,7 @@ def build(mihomo: Path) -> None:
         "Advertising-Keyword": len(ads_keywords), "tvbox": len(valid_payload),
         "pcdn-domain": len(pcdn_domains), "pcdn-ip": len(pcdn_ips),
         "pcdn-keyword": len(pcdn_keywords), "DNS-Domain": len(dns_domains),
-        "DNS-Port": len(dns_ports), "Fakeip-Domain": len(fakeip_domains),
+        "Fakeip-Domain": len(fakeip_domains),
         "Fakeip-Keyword": len(fakeip_keywords), "GameDownloadCN": len(game_domains),
     }
     for name, count in counts.items():
