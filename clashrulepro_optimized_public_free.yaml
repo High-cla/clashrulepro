@@ -106,7 +106,7 @@ dns:
   use-system-hosts: true
   # 用 IP 引导解析加密 DNS 主机名，避免 nameserver 本身出现解析依赖环。
   default-nameserver:
-    - 223.6.6.6
+    - tls://223.6.6.6
   nameserver-policy:
     "+.arpa": '10.0.0.1'
     "rule-set:private": '10.0.0.1'
@@ -123,9 +123,9 @@ dns:
     - '*.lan'
     - +.lan
     - +.local
-    - rule-set:private,no-resolve
-    - rule-set:Fakeip-Domain,no-resolve
-    - rule-set:Fakeip-Keyword,no-resolve
+    - rule-set:private
+    - rule-set:Fakeip-Domain
+    - rule-set:Fakeip-Keyword
 
 # --- YAML 锚点模板 ---
 providers-anchor:
@@ -190,9 +190,20 @@ proxy-providers:
       udp-over-tcp: true
       tfo: true
       mptcp: true
+      smux:
+       enabled: true
+       protocol: smux
+       max-connections: 16
+       min-streams: 4
+       statistic: true
+       only-tcp: false
+       padding: true
+       brutal-opts:
+        enabled: true
+        up: 50
+        down: 100
       override-expr:
         - '(select(.type == "vless" or .type == "vmess") | .packet-encoding) = "xudp"'
-#        - '.smux = {"enabled": true, "protocol": "h2mux", "max-connections": 16, "only-tcp": true, "padding": true}'
 
   # 机场3：Zhuhai Free Nodes，官方 README 标注每小时更新。
   机场3:
@@ -209,9 +220,20 @@ proxy-providers:
       udp-over-tcp: true
       tfo: true
       mptcp: true
+      smux:
+       enabled: true
+       protocol: smux
+       max-connections: 16
+       min-streams: 4
+       statistic: true
+       only-tcp: false
+       padding: true
+       brutal-opts:
+        enabled: true
+        up: 50
+        down: 100
       override-expr:
         - '(select(.type == "vless" or .type == "vmess") | .packet-encoding) = "xudp"'
-#        - '.smux = {"enabled": true, "protocol": "h2mux", "max-connections": 16, "only-tcp": true, "padding": true}'
   机场5:
     <<: *pr
     url: "https"
@@ -222,9 +244,20 @@ proxy-providers:
       udp-over-tcp: true
       tfo: true
       mptcp: true
+      smux:
+       enabled: true
+       protocol: smux
+       max-connections: 16
+       min-streams: 4
+       statistic: true
+       only-tcp: false
+       padding: true
+       brutal-opts:
+        enabled: true
+        up: 50
+        down: 100
       override-expr:
         - '(select(.type == "vless" or .type == "vmess") | .packet-encoding) = "xudp"'
-#        - '.smux = {"enabled": true, "protocol": "h2mux", "max-connections": 16, "only-tcp": true, "padding": true}'
   机场6:
     <<: *pr
     url: "https"
@@ -235,9 +268,20 @@ proxy-providers:
       udp-over-tcp: true
       tfo: true
       mptcp: true
+      smux:
+       enabled: true
+       protocol: smux
+       max-connections: 16
+       min-streams: 4
+       statistic: true
+       only-tcp: false
+       padding: true
+       brutal-opts:
+        enabled: true
+        up: 50
+        down: 100
       override-expr:
         - '(select(.type == "vless" or .type == "vmess") | .packet-encoding) = "xudp"'
-#        - '.smux = {"enabled": true, "protocol": "h2mux", "max-connections": 16, "only-tcp": true, "padding": true}'
 
 # --- 策略组 ---
 proxy-groups:
