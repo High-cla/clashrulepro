@@ -3,7 +3,6 @@ mixed-port: 7890
 ipv6: false
 tcp-concurrent: true
 etag-support: true
-global-ua: clash.meta
 log-level: warning
 
 # --- TCP Keep-Alive ---
@@ -24,7 +23,7 @@ profile:
 sniffer:
   enable: true
   force-dns-mapping: true
-  parse-pure-ip: true
+  parse-pure-ip: false
   override-destination: false
   sniff:
     HTTP:
@@ -101,19 +100,16 @@ tun:
 dns:
   enable: true
   ipv6: false
-  enhanced-mode: redir-host
+  enhanced-mode: fake-ip
   cache-algorithm: arc
   use-system-hosts: true
-  # 用 IP 引导解析加密 DNS 主机名，避免 nameserver 本身出现解析依赖环。
-  default-nameserver:
-    - tls://223.6.6.6
   nameserver-policy:
     "+.arpa": '10.0.0.1'
     "rule-set:private": '10.0.0.1'
     "rule-set:NoBanDirect":
-      - tls://security.cloudflare-dns.com#代理&ecs=103.151.172.0/24
+      - tls://1.0.0.2#代理&ecs=103.151.172.0/24
   nameserver:
-    - tls://security.cloudflare-dns.com#代理&ecs=103.151.172.0/24
+    - tls://1.0.0.2#代理&ecs=103.151.172.0/24
   proxy-server-nameserver:
     - tls://159277.alidns.com#DIRECT
   direct-nameserver:
@@ -254,8 +250,8 @@ proxy-providers:
        padding: true
        brutal-opts:
         enabled: true
-        up: 50
-        down: 100
+        up: 100
+        down: 300
       override-expr:
         - '(select(.type == "vless" or .type == "vmess") | .packet-encoding) = "xudp"'
   机场6:
@@ -498,9 +494,9 @@ rule-providers:
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/googlefcm.mrs"
 
   steam-cn:
-    <<: *dm
-    path: ./rule_providers/steam-cn.mrs
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam@cn.mrs"
+    <<: *cl
+    path: ./rule_providers/SteamCN.list
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/SteamCN/SteamCN.list"
 
   google-cn:
     <<: *dm
@@ -552,13 +548,6 @@ rule-providers:
     path: ./rule_providers/cloudflare-cn.mrs
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cloudflare@cn.mrs"
 
-  cloudflare:
-    type: inline
-    behavior: classical
-    payload:
-      - DOMAIN,challenges.cloudflare.com
-      - DOMAIN-SUFFIX,cloudflarechallenge.com
-
 rules:
   - AND,((DOMAIN-REGEX,^[a-z0-9-]*(upload|log|uspider)[a-z0-9-]*\.(mihoyo|hoyoverse|yuanshen|juequling)\.com$),(NOT,((DOMAIN-KEYWORD,login)))),REJECT
   - RULE-SET,userReject,REJECT,no-resolve
@@ -567,9 +556,7 @@ rules:
   - RULE-SET,NoBanDirect,DIRECT
   - RULE-SET,userDirect,DIRECT
   - DOMAIN,159277.alidns.com,DIRECT
-  - IP-CIDR,223.4.0.0/14,DIRECT,no-resolve
   - RULE-SET,userProxy,代理
-  - DOMAIN,security.cloudflare-dns.com,代理
   - RULE-SET,doh-geosite,REJECT,no-resolve
   - RULE-SET,DNS-Domain,REJECT,no-resolve
   - RULE-SET,phishing-army,REJECT,no-resolve
@@ -594,10 +581,6 @@ rules:
   - RULE-SET,google-cn,DIRECT
   - RULE-SET,games-cn,DIRECT
   - RULE-SET,cn,DIRECT
-  - DOMAIN-SUFFIX,eccdnx.com,代理
-  - DOMAIN-SUFFIX,steamcontent.com,代理
-  - DOMAIN-SUFFIX,clngaa.com,代理
-  - RULE-SET,cloudflare,代理
   - RULE-SET,gfw,代理
   - RULE-SET,porn,代理
   - MATCH,代理
