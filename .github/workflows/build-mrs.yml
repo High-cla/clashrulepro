@@ -41,14 +41,25 @@ jobs:
           cache-dependency-path: requirements-ci.txt
       - name: Install YAML parser
         run: python -m pip install -r requirements-ci.txt
+      - name: Cache pinned Mihomo converter
+        id: mihomo-cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/mihomo/v1.19.33/mihomo.gz
+          key: ${{ runner.os }}-${{ runner.arch }}-mihomo-v1.19.33-132f6f3edf9a65e62f04853aed3358472e0b2b7666daa8419edfa2ddf5bb6323
       - name: Download pinned Mihomo converter
+        if: steps.mihomo-cache.outputs.cache-hit != 'true'
         shell: bash
         run: |
+          mkdir -p "$HOME/.cache/mihomo/v1.19.33"
           curl -fsSL --retry 3 \
             "https://github.com/MetaCubeX/mihomo/releases/download/v1.19.33/mihomo-linux-amd64-v1.19.33.gz" \
-            -o /tmp/mihomo.gz
-          echo "132f6f3edf9a65e62f04853aed3358472e0b2b7666daa8419edfa2ddf5bb6323  /tmp/mihomo.gz" | sha256sum --check
-          gzip -dc /tmp/mihomo.gz > /tmp/mihomo
+            -o "$HOME/.cache/mihomo/v1.19.33/mihomo.gz"
+      - name: Verify and unpack Mihomo converter
+        shell: bash
+        run: |
+          echo "132f6f3edf9a65e62f04853aed3358472e0b2b7666daa8419edfa2ddf5bb6323  $HOME/.cache/mihomo/v1.19.33/mihomo.gz" | sha256sum --check
+          gzip -dc "$HOME/.cache/mihomo/v1.19.33/mihomo.gz" > /tmp/mihomo
           chmod +x /tmp/mihomo
           /tmp/mihomo -v
       - name: Generate rule providers
