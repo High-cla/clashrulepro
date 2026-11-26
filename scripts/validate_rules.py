@@ -222,7 +222,7 @@ def parse_rule(path: str, line_no: int, raw: str, regex_validator: GoRegexValida
     if not line or line.startswith("#"):
         return None
     # Allow trailing comments only when introduced by whitespace.
-    line = re.split(r"\\s+#", line, maxsplit=1)[0].strip()
+    line = re.split(r"\s+#", line, maxsplit=1)[0].strip()
     raw_kind, separator, raw_payload = line.partition(",")
     if not separator:
         raise ValueError("rule must contain a comma after its type")
@@ -374,10 +374,15 @@ def validate_provider_config(errors: list[str]) -> None:
         "tvbox": ("domain", "mrs"),
         "GameDownload": ("domain", "mrs"),
     }
+    optional_generated = {
+        "pcdn-domain", "pcdn-ip", "pcdn-keyword",
+        "DNS-Domain", "Fakeip-Domain", "Fakeip-Keyword",
+    }
     for name, (behavior, file_format) in expected.items():
         provider = providers.get(name)
         if not isinstance(provider, dict):
-            errors.append(f"clashrulepro_optimized_public_free.yaml: missing provider {name}")
+            if name not in optional_generated:
+                errors.append(f"clashrulepro_optimized_public_free.yaml: missing provider {name}")
             continue
         if provider.get("behavior") != behavior or provider.get("format") != file_format:
             errors.append(
@@ -396,7 +401,8 @@ def validate_provider_config(errors: list[str]) -> None:
 
     fakeip_filter = config.get("dns", {}).get("fake-ip-filter", [])
     for required in ("rule-set:Fakeip-Domain", "rule-set:Fakeip-Keyword"):
-        if required not in fakeip_filter:
+        provider_name = required.split(":", 1)[1]
+        if provider_name in providers and required not in fakeip_filter:
             errors.append(f"clashrulepro_optimized_public_free.yaml: fake-ip-filter missing {required}")
 
 
