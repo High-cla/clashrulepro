@@ -190,6 +190,57 @@ def local_output_prefix(source: Path, source_dir: Path) -> tuple[str, str]:
     return prefix, suffix_style
 
 
+def remove_configured_providers(stale_filenames: list[str]) -> None:
+    """Remove stale local providers and their rule references from the main profile."""
+    config_path = ROOT / "clashrulepro_optimized_public_free.yaml"
+    if not config_path.is_file():
+        return
+
+    content = config_path.read_text(encoding="utf-8")
+    try:
+        config = yaml.safe_load(content)
+    except yaml.YAMLError as exc:
+        raise ValueError(f"cannot update providers in {config_path.name}: {exc}") from exc
+
+    providers = config.get("rule-providers", {}) if isinstance(config, dict) else {}
+    stale_names = {
+        name for name, provider in providers.items()
+        if isinstance(provider, dict)
+        and Path(str(provider.get("path", ""))).name in set(stale_filenames)
+    }
+    if not stale_names:
+        return
+
+    lines = content.splitlines()
+    output = []
+    section = None
+    skip_provider_block = False
+    for line in lines:
+        if line and not line[0].isspace() and not line.startswith("#"):
+            section = line.partition(":")[0] if line.endswith(":") else None
+            skip_provider_block = False
+
+        if section == "rule-providers" and line.startswith("  ") and not line.startswith("    ") and line.strip().endswith(":"):
+            provider_name = line.strip()[:-1]
+            skip_provider_block = provider_name in stale_names
+
+        if section == "rule-providers" and skip_provider_block:
+            continue
+
+        if any(
+            re.search(rf"RULE-SET,{re.escape(name)},", line)
+            or f"rule-set:{name}" in line
+            for name in stale_names
+        ):
+            continue
+        output.append(line)
+
+    updated = "\n".join(output) + ("\n" if content.endswith("\n") else "")
+    if updated != content:
+        config_path.write_text(updated, encoding="utf-8")
+        print(f"Removed stale provider configuration: {', '.join(sorted(stale_names))}")
+
+
 def build_local_sources(mihomo: Path, source_dir: Path) -> int:
     generated = 0
     processed = 0
@@ -222,21 +273,33 @@ def build_local_sources(mihomo: Path, source_dir: Path) -> int:
         domain_suffix, ip_suffix, keyword_suffix = suffixes
         relative = source.relative_to(source_dir)
 
-        if domains:
-            convert(
-                mihomo, "domain", "text", "\n".join(domains) + "\n",
-                OUT / f"{prefix}-{domain_suffix}.mrs",
-            )
+        expected_outputs = {
+            "domain": OUT / f"{prefix}-{domain_suffix}.mrs",
+            "ip": OUT / f"{prefix}-{ip_suffix}.mrs",
+            "keyword": OUT / f"{prefix}-{keyword_suffix}.txt",
+        }
+        active_outputs = {
+            "domain": bool(domains),
+            "ip": bool(ips),
+            "keyword": bool(keywords),
+        }
+        stale_files = []
+        for category, destination in expected_outputs.items():
+            if not active_outputs[category]:
+                if destination.is_file():
+                    destination.unlink()
+                    stale_files.append(destination.name)
+                continue
+            if category == "domain":
+                convert(mihomo, "domain", "text", "\n".join(domains) + "\n", destination)
+            elif category == "ip":
+                convert(mihomo, "ipcidr", "text", "\n".join(ips) + "\n", destination)
+            else:
+                write_text(destination.name, keywords)
             generated += 1
-        if ips:
-            convert(
-                mihomo, "ipcidr", "text", "\n".join(ips) + "\n",
-                OUT / f"{prefix}-{ip_suffix}.mrs",
-            )
-            generated += 1
-        if keywords:
-            write_text(f"{prefix}-{keyword_suffix}.txt", keywords)
-            generated += 1
+
+        if stale_files:
+            remove_configured_providers(stale_files)
 
         processed += 1
         summary = f"{relative}: domain={len(domains)}, ip={len(ips)}, keyword={len(keywords)}"
