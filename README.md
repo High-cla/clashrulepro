@@ -25,7 +25,7 @@
 - `IP-CIDR` / `IP-CIDR6`：生成 `ipcidr` 行为的 MRS 文件。
 - `DOMAIN-KEYWORD`：保留为 classical/text 的 `.txt` 文件。
 
-Mihomo 的 MRS 目前只支持 `domain` 和 `ipcidr` 行为；`DOMAIN-REGEX`、`DOMAIN-WILDCARD`、`GEOSITE`、端口和进程类规则不能塞入这两类 MRS。扫描到的文件若同时包含可转换和不可转换规则，只转换支持的部分并在 Actions 日志中报告跳过数量；没有可转换规则的配置文件会被忽略。命名使用源文件名，子目录名会拼入输出文件名前缀；输出位于 `rule_providers/`。
+Mihomo 的 MRS 目前只支持 `domain` 和 `ipcidr` 行为；`DOMAIN-REGEX`、`DOMAIN-WILDCARD`、`GEOSITE`、端口和进程类规则不能塞入这两类 MRS。扫描到的文件若同时包含可转换和不可转换规则，只转换支持的部分并在 Actions 日志中报告跳过数量；没有可转换规则的配置文件会被忽略。命名使用源文件名，子目录名会拼入输出文件名前缀；输出位于 `rule_providers/`。脚本通过 `.generated-local-providers.json` 记录已生成文件；规则类别变空、源文件改名或删除时，会删除旧产物，并同步移除主配置中对应的 Provider 定义和引用，避免旧规则继续生效。
 
 广告规则仍从 Blackmatrix7 的同一份 `Advertising.list` 拆分为 `Advertising-Domain`（domain/MRS）、`Advertising-IP`（ipcidr/MRS）和 `Advertising-Keyword`（classical/text）。`tvbox` 从 Sfssup 的 domain YAML 转为 domain MRS；`GameDownloadCN` 从 Blackmatrix7 的 domain 规则转为 domain MRS。生成文件由 `.github/workflows/build-mrs.yml` 使用固定版本的官方 Mihomo 转换器构建并自动提交。
 
