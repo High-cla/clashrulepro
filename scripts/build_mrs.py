@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import ipaddress
+import json
 import re
 import shutil
 import subprocess
@@ -245,11 +246,18 @@ def build_local_sources(mihomo: Path, source_dir: Path) -> int:
     generated = 0
     processed = 0
     prefixes: dict[str, Path] = {}
+    manifest = OUT / ".generated-local-providers.json"
 
+    try:
+        previous_outputs = set(json.loads(manifest.read_text(encoding="utf-8"))) if manifest.is_file() else set()
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(f"invalid generated-provider manifest: {exc}") from exc
+    if any(not isinstance(name, str) or Path(name).name != name for name in previous_outputs):
+        raise ValueError("generated-provider manifest contains an invalid filename")
+
+    current_outputs: set[str] = set()
+    stale_outputs: set[str] = set()
     files = discover_rule_files(source_dir)
-    if not files:
-        print(f"No YAML rule files found in {source_dir}")
-        return generated
 
     for source in files:
         prefix, suffix_style = local_output_prefix(source, source_dir)
@@ -260,11 +268,6 @@ def build_local_sources(mihomo: Path, source_dir: Path) -> int:
 
         lines = extract_local_rule_lines(source)
         domains, ips, keywords, skipped = split_local_rules(lines)
-        if not (domains or ips or keywords):
-            if skipped:
-                print(f"{source.relative_to(source_dir)}: skipped; no domain/IP/keyword rules (ignored {skipped} unsupported rule(s))")
-            continue
-
         suffixes = (
             ("domain", "ip", "keyword")
             if suffix_style == "lower"
@@ -283,31 +286,56 @@ def build_local_sources(mihomo: Path, source_dir: Path) -> int:
             "ip": bool(ips),
             "keyword": bool(keywords),
         }
-        stale_files = []
+
         for category, destination in expected_outputs.items():
             if not active_outputs[category]:
                 if destination.is_file():
                     destination.unlink()
-                    stale_files.append(destination.name)
+                    stale_outputs.add(destination.name)
+                elif destination.name in previous_outputs:
+                    stale_outputs.add(destination.name)
                 continue
+
             if category == "domain":
                 convert(mihomo, "domain", "text", "\n".join(domains) + "\n", destination)
             elif category == "ip":
                 convert(mihomo, "ipcidr", "text", "\n".join(ips) + "\n", destination)
             else:
                 write_text(destination.name, keywords)
+
+            current_outputs.add(destination.name)
             generated += 1
 
-        if stale_files:
-            remove_configured_providers(stale_files)
+        if any(active_outputs.values()):
+            processed += 1
+            summary = f"{relative}: domain={len(domains)}, ip={len(ips)}, keyword={len(keywords)}"
+            if skipped:
+                summary += f", skipped_unsupported={skipped}"
+            print(summary)
+        elif skipped:
+            print(f"{relative}: no domain/IP/keyword rules (ignored {skipped} unsupported rule(s))")
 
-        processed += 1
-        summary = f"{relative}: domain={len(domains)}, ip={len(ips)}, keyword={len(keywords)}"
-        if skipped:
-            summary += f", skipped_unsupported={skipped}"
-        print(summary)
+    # Remove artifacts for source files that were deleted or renamed since the last build.
+    for stale_name in previous_outputs - current_outputs:
+        stale_path = OUT / stale_name
+        if stale_path.is_file():
+            stale_path.unlink()
+        stale_outputs.add(stale_name)
 
-    print(f"Discovered {len(files)} YAML file(s); converted {processed} rule source(s) into {generated} provider file(s)")
+    if stale_outputs:
+        remove_configured_providers(sorted(stale_outputs))
+
+    manifest.write_text(
+        json.dumps(sorted(current_outputs), ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    if not files:
+        print(f"No YAML rule files found in {source_dir}")
+    print(
+        f"Discovered {len(files)} YAML file(s); converted {processed} rule source(s) "
+        f"into {generated} provider file(s)"
+    )
     return generated
 
 
