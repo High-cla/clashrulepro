@@ -29,7 +29,6 @@ RULE_FILES = (
     "userDirect.yaml",
     "userProxy.yaml",
     "userReject.yaml",
-    "DNS.yaml",
     "Privacy.yaml",
     "Private.yaml",
 )
@@ -42,7 +41,6 @@ POLICIES = {
     "userProxy.yaml": "PROXY",
     "userReject.yaml": "REJECT",
     "pcdn.yaml": "REJECT",
-    "DNS.yaml": "REJECT",
     "Privacy.yaml": "REJECT",
 }
 
@@ -224,7 +222,7 @@ def parse_rule(path: str, line_no: int, raw: str, regex_validator: GoRegexValida
     if not line or line.startswith("#"):
         return None
     # Allow trailing comments only when introduced by whitespace.
-    line = re.split(r"\s+#", line, maxsplit=1)[0].strip()
+    line = re.split(r"\\s+#", line, maxsplit=1)[0].strip()
     raw_kind, separator, raw_payload = line.partition(",")
     if not separator:
         raise ValueError("rule must contain a comma after its type")
@@ -400,6 +398,7 @@ def validate_provider_config(errors: list[str]) -> None:
     for required in ("rule-set:Fakeip-Domain", "rule-set:Fakeip-Keyword"):
         if required not in fakeip_filter:
             errors.append(f"clashrulepro_optimized_public_free.yaml: fake-ip-filter missing {required}")
+
 
 def validate_repository(regex_validator: GoRegexValidator) -> int:
     errors: list[str] = []
