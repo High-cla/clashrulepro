@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build local Mihomo MRS providers from source rule feeds and repository text rules."""
+"""Build Mihomo MRS providers from remote feeds and local rule files."""
 
 from __future__ import annotations
 
@@ -25,6 +25,18 @@ SOURCES = {
 DOMAIN_TYPES = {"DOMAIN", "DOMAIN-SUFFIX"}
 KEYWORD_TYPES = {"DOMAIN-KEYWORD"}
 IP_TYPES = {"IP-CIDR", "IP-CIDR6"}
+LOCAL_SUPPORTED_TYPES = DOMAIN_TYPES | KEYWORD_TYPES | IP_TYPES
+KNOWN_RULE_TYPES = LOCAL_SUPPORTED_TYPES | {
+    "DOMAIN-REGEX", "DOMAIN-WILDCARD", "GEOSITE", "GEOIP",
+    "DST-PORT", "SRC-PORT", "IN-PORT", "NETWORK",
+    "SRC-IP-CIDR", "SRC-IP-CIDR6", "IP-ASN", "SRC-IP-ASN",
+    "PROCESS-NAME", "PROCESS-NAME-REGEX", "PROCESS-PATH",
+    "PROCESS-PATH-REGEX", "UID", "RULE-SET", "MATCH",
+}
+CONFIG_KEYS = {
+    "proxy-providers", "proxy-groups", "rule-providers",
+    "mixed-port", "dns", "tun", "proxies",
+}
 
 
 def download_text(url: str) -> str:
@@ -42,6 +54,7 @@ def parse_line(raw: str) -> tuple[str, str] | None:
     if not line or line.startswith("#"):
         return None
     line = re.split(r"\s+#", line, maxsplit=1)[0].strip()
+    line = re.sub(r"^-\s*", "", line)
     parts = [item.strip() for item in line.split(",")]
     if len(parts) < 2 or not parts[1]:
         raise ValueError(f"invalid rule line: {raw!r}")
@@ -76,6 +89,163 @@ def split_classical(text: str) -> tuple[list[str], list[str], list[str]]:
         else:
             raise ValueError(f"unsupported rule at line {line_no}: {raw.strip()}")
     return unique(domains), unique(ips), unique(keywords)
+
+
+def extract_local_rule_lines(source: Path) -> list[str]:
+    """Read either a line-based rule list or a YAML payload containing rule strings."""
+    content = source.read_text(encoding="utf-8-sig")
+    try:
+        document = yaml.safe_load(content)
+    except yaml.YAMLError:
+        document = None
+
+    if isinstance(document, dict):
+        payload = document.get("payload")
+        if isinstance(payload, list):
+            return [item for item in payload if isinstance(item, str)]
+        # Do not mistake a full Mihomo profile or provider config for a rule list.
+        if CONFIG_KEYS.intersection(document):
+            return []
+    elif isinstance(document, list) and all(isinstance(item, str) for item in document):
+        return document
+
+    return content.splitlines()
+
+
+def split_local_rules(lines: list[str]) -> tuple[list[str], list[str], list[str], int]:
+    """Extract MRS-compatible rules and count known rule types MRS cannot represent."""
+    domains, ips, keywords = [], [], []
+    skipped = 0
+
+    for line_no, raw in enumerate(lines, 1):
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        line = re.split(r"\s+#", line, maxsplit=1)[0].strip()
+        line = re.sub(r"^-\s*", "", line)
+        raw_kind, separator, _ = line.partition(",")
+        if not separator:
+            continue
+
+        kind = raw_kind.strip().upper()
+        if kind not in LOCAL_SUPPORTED_TYPES:
+            if kind in KNOWN_RULE_TYPES:
+                skipped += 1
+            continue
+
+        parsed = parse_line(line)
+        if parsed is None:
+            continue
+        _, value = parsed
+        if kind == "DOMAIN":
+            try:
+                address = ipaddress.ip_address(value)
+            except ValueError:
+                domains.append(value)
+            else:
+                prefix = 32 if address.version == 4 else 128
+                ips.append(f"{address}/{prefix}")
+        elif kind == "DOMAIN-SUFFIX":
+            domains.append(f"+.{value}")
+        elif kind in KEYWORD_TYPES:
+            keywords.append(f"{kind},{value}")
+        elif kind in IP_TYPES:
+            try:
+                network = ipaddress.ip_network(value, strict=False)
+            except ValueError as exc:
+                raise ValueError(f"invalid IP rule at line {line_no}: {raw.strip()}: {exc}") from exc
+            if kind == "IP-CIDR6" and network.version != 6:
+                raise ValueError(f"IP-CIDR6 requires IPv6 at line {line_no}: {raw.strip()}")
+            ips.append(network.with_prefixlen)
+
+    return unique(domains), unique(ips), unique(keywords), skipped
+
+
+def discover_rule_files(source_dir: Path) -> list[Path]:
+    """Find YAML rule files recursively, excluding hidden and generated directories."""
+    excluded = {".git", ".github", "__pycache__"}
+    files = []
+    for path in source_dir.rglob("*"):
+        if not path.is_file() or path.suffix.lower() not in {".yaml", ".yml"}:
+            continue
+        relative = path.relative_to(source_dir)
+        if any(part.startswith(".") or part in excluded for part in relative.parts[:-1]):
+            continue
+        if OUT.resolve() == path.resolve() or OUT.resolve() in path.resolve().parents:
+            continue
+        files.append(path)
+    return sorted(files)
+
+
+def local_output_prefix(source: Path, source_dir: Path) -> tuple[str, str]:
+    relative = source.relative_to(source_dir)
+    parts = [*relative.parent.parts, relative.stem]
+    safe_parts = [
+        re.sub(r"[^A-Za-z0-9._-]+", "-", part).strip("-") or "rules"
+        for part in parts
+    ]
+    prefix = "-".join(safe_parts)
+    # Preserve the existing output suffix casing for names such as pcdn.yaml and Fakeip.yaml.
+    suffix_style = "lower" if source.stem.islower() else "title"
+    return prefix, suffix_style
+
+
+def build_local_sources(mihomo: Path, source_dir: Path) -> int:
+    generated = 0
+    processed = 0
+    prefixes: dict[str, Path] = {}
+
+    files = discover_rule_files(source_dir)
+    if not files:
+        print(f"No YAML rule files found in {source_dir}")
+        return generated
+
+    for source in files:
+        prefix, suffix_style = local_output_prefix(source, source_dir)
+        previous = prefixes.get(prefix)
+        if previous is not None:
+            raise ValueError(f"source filename collision: {previous} and {source} both map to {prefix}")
+        prefixes[prefix] = source
+
+        lines = extract_local_rule_lines(source)
+        domains, ips, keywords, skipped = split_local_rules(lines)
+        if not (domains or ips or keywords):
+            if skipped:
+                print(f"{source.relative_to(source_dir)}: skipped; no domain/IP/keyword rules (ignored {skipped} unsupported rule(s))")
+            continue
+
+        suffixes = (
+            ("domain", "ip", "keyword")
+            if suffix_style == "lower"
+            else ("Domain", "IP", "Keyword")
+        )
+        domain_suffix, ip_suffix, keyword_suffix = suffixes
+        relative = source.relative_to(source_dir)
+
+        if domains:
+            convert(
+                mihomo, "domain", "text", "\n".join(domains) + "\n",
+                OUT / f"{prefix}-{domain_suffix}.mrs",
+            )
+            generated += 1
+        if ips:
+            convert(
+                mihomo, "ipcidr", "text", "\n".join(ips) + "\n",
+                OUT / f"{prefix}-{ip_suffix}.mrs",
+            )
+            generated += 1
+        if keywords:
+            write_text(f"{prefix}-{keyword_suffix}.txt", keywords)
+            generated += 1
+
+        processed += 1
+        summary = f"{relative}: domain={len(domains)}, ip={len(ips)}, keyword={len(keywords)}"
+        if skipped:
+            summary += f", skipped_unsupported={skipped}"
+        print(summary)
+
+    print(f"Discovered {len(files)} YAML file(s); converted {processed} rule source(s) into {generated} provider file(s)")
+    return generated
 
 
 def valid_domain_expression(value: str) -> bool:
@@ -124,7 +294,7 @@ def write_text(name: str, lines: list[str]) -> None:
     (OUT / name).write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-def build(mihomo: Path) -> None:
+def build(mihomo: Path, source_dir: Path) -> None:
     OUT.mkdir(parents=True, exist_ok=True)
 
     # Advertising: all outputs come from one Blackmatrix7 source feed.
@@ -149,47 +319,33 @@ def build(mihomo: Path) -> None:
     tvbox_yaml = yaml.safe_dump({"payload": unique(valid_payload)}, allow_unicode=True, sort_keys=False)
     convert(mihomo, "domain", "yaml", tvbox_yaml, OUT / "tvbox.mrs")
 
-    # PCDN: separate domain, IP, and keyword rules.
-    pcdn_domains, pcdn_ips, pcdn_keywords = split_classical((ROOT / "pcdn.yaml").read_text(encoding="utf-8"))
-    convert(mihomo, "domain", "text", "\n".join(pcdn_domains) + "\n", OUT / "pcdn-domain.mrs")
-    convert(mihomo, "ipcidr", "text", "\n".join(pcdn_ips) + "\n", OUT / "pcdn-ip.mrs")
-    write_text("pcdn-keyword.txt", pcdn_keywords)
-
-    # DNS: domain rules only; no separate DNS-Port provider is generated.
-    dns_domains, _, _ = split_classical((ROOT / "DNS.yaml").read_text(encoding="utf-8"))
-    convert(mihomo, "domain", "text", "\n".join(dns_domains) + "\n", OUT / "DNS-Domain.mrs")
-
-    # Fake-IP exclusions: domain and keyword providers remain independent.
-    fakeip_domains, _, fakeip_keywords = split_classical((ROOT / "Fakeip.yaml").read_text(encoding="utf-8"))
-    convert(mihomo, "domain", "text", "\n".join(fakeip_domains) + "\n", OUT / "Fakeip-Domain.mrs")
-    write_text("Fakeip-Keyword.txt", fakeip_keywords)
-
     # GameDownloadCN source has only DOMAIN / DOMAIN-SUFFIX rules.
     game_domains, _, game_keywords = split_classical(download_text(SOURCES["game_download"]))
     if game_keywords:
         raise ValueError("GameDownloadCN source unexpectedly contains non-domain rule classes")
     convert(mihomo, "domain", "text", "\n".join(game_domains) + "\n", OUT / "GameDownloadCN.mrs")
 
-    counts = {
-        "Advertising-Domain": len(ads_domains), "Advertising-IP": len(ads_ips),
-        "Advertising-Keyword": len(ads_keywords), "tvbox": len(valid_payload),
-        "pcdn-domain": len(pcdn_domains), "pcdn-ip": len(pcdn_ips),
-        "pcdn-keyword": len(pcdn_keywords), "DNS-Domain": len(dns_domains),
-        "Fakeip-Domain": len(fakeip_domains),
-        "Fakeip-Keyword": len(fakeip_keywords), "GameDownloadCN": len(game_domains),
-    }
-    for name, count in counts.items():
-        print(f"{name}: {count} rules")
-    print(f"Generated {len(counts)} provider files in {OUT.relative_to(ROOT)}")
+    # Local rule lists are discovered recursively instead of naming individual files.
+    local_generated = build_local_sources(mihomo, source_dir)
+    print(f"Generated {5 + local_generated} provider files in {OUT.relative_to(ROOT)}")
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mihomo", required=True, type=Path, help="path to the official Mihomo binary")
+    parser.add_argument(
+        "--source-dir",
+        type=Path,
+        default=ROOT,
+        help="directory to scan recursively for .yaml/.yml rule files (default: repository root)",
+    )
     args = parser.parse_args()
     if not args.mihomo.is_file():
         parser.error(f"Mihomo binary does not exist: {args.mihomo}")
-    build(args.mihomo.resolve())
+    source_dir = args.source_dir.resolve()
+    if not source_dir.is_dir():
+        parser.error(f"rule source directory does not exist: {source_dir}")
+    build(args.mihomo.resolve(), source_dir)
     return 0
 
 
