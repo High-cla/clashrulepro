@@ -1,0 +1,18 @@
+[
+  "Fakeip-Domain.mrs",
+  "Fakeip-Keyword.txt",
+  "NoBanDirect-Domain.mrs",
+  "NoBanDirect-Keyword.txt",
+  "Private-Domain.mrs",
+  "Private-IP.mrs",
+  "pcdn-domain.mrs",
+  "pcdn-ip.mrs",
+  "pcdn-keyword.txt",
+  "userDirect-Domain.mrs",
+  "userDirect-IP.mrs",
+  "userDirect-Keyword.txt",
+  "userProxy-Domain.mrs",
+  "userReject-Domain.mrs",
+  "userReject-IP.mrs",
+  "userReject-Keyword.txt"
+]
