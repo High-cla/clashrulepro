@@ -3,19 +3,15 @@ name: Build MRS rule providers
 on:
   push:
     paths:
-      - "clashrulepro_optimized_public_free.yaml"
-      - "pcdn.yaml"
-      - "DNS.yaml"
-      - "Fakeip.yaml"
+      - "**.yaml"
+      - "**.yml"
       - "scripts/build_mrs.py"
       - "requirements-ci.txt"
       - ".github/workflows/build-mrs.yml"
   pull_request:
     paths:
-      - "clashrulepro_optimized_public_free.yaml"
-      - "pcdn.yaml"
-      - "DNS.yaml"
-      - "Fakeip.yaml"
+      - "**.yaml"
+      - "**.yml"
       - "scripts/build_mrs.py"
       - "requirements-ci.txt"
       - ".github/workflows/build-mrs.yml"
@@ -28,7 +24,7 @@ permissions:
 
 jobs:
   build:
-    name: Convert domain / IP rules to MRS
+    name: Convert discovered domain / IP rules to MRS
     runs-on: ubuntu-26.04
     steps:
       - name: Checkout
@@ -63,15 +59,15 @@ jobs:
           chmod +x /tmp/mihomo
           /tmp/mihomo -v
       - name: Generate rule providers
-        run: python scripts/build_mrs.py --mihomo /tmp/mihomo
+        run: python scripts/build_mrs.py --mihomo /tmp/mihomo --source-dir .
       - name: Commit generated providers
-        if: github.event_name != 'pull_request'
+        if: github.ref == 'refs/heads/main' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add rule_providers/
+          git add rule_providers/ clashrulepro_optimized_public_free.yaml
           if ! git diff --cached --quiet; then
-            git commit -m "build: regenerate split MRS rule providers"
+            git commit -m "build: regenerate discovered MRS rule providers"
             git push origin "HEAD:$GITHUB_REF_NAME"
           fi

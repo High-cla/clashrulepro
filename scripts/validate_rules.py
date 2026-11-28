@@ -29,7 +29,6 @@ RULE_FILES = (
     "userDirect.yaml",
     "userProxy.yaml",
     "userReject.yaml",
-    "DNS.yaml",
     "Privacy.yaml",
     "Private.yaml",
 )
@@ -42,7 +41,6 @@ POLICIES = {
     "userProxy.yaml": "PROXY",
     "userReject.yaml": "REJECT",
     "pcdn.yaml": "REJECT",
-    "DNS.yaml": "REJECT",
     "Privacy.yaml": "REJECT",
 }
 
@@ -376,10 +374,15 @@ def validate_provider_config(errors: list[str]) -> None:
         "tvbox": ("domain", "mrs"),
         "GameDownload": ("domain", "mrs"),
     }
+    optional_generated = {
+        "pcdn-domain", "pcdn-ip", "pcdn-keyword",
+        "DNS-Domain", "Fakeip-Domain", "Fakeip-Keyword",
+    }
     for name, (behavior, file_format) in expected.items():
         provider = providers.get(name)
         if not isinstance(provider, dict):
-            errors.append(f"clashrulepro_optimized_public_free.yaml: missing provider {name}")
+            if name not in optional_generated:
+                errors.append(f"clashrulepro_optimized_public_free.yaml: missing provider {name}")
             continue
         if provider.get("behavior") != behavior or provider.get("format") != file_format:
             errors.append(
@@ -398,8 +401,10 @@ def validate_provider_config(errors: list[str]) -> None:
 
     fakeip_filter = config.get("dns", {}).get("fake-ip-filter", [])
     for required in ("rule-set:Fakeip-Domain", "rule-set:Fakeip-Keyword"):
-        if required not in fakeip_filter:
+        provider_name = required.split(":", 1)[1]
+        if provider_name in providers and required not in fakeip_filter:
             errors.append(f"clashrulepro_optimized_public_free.yaml: fake-ip-filter missing {required}")
+
 
 def validate_repository(regex_validator: GoRegexValidator) -> int:
     errors: list[str] = []
